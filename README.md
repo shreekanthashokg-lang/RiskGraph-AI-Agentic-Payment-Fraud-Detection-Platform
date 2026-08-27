@@ -295,7 +295,7 @@ Every subsystem degrades explicitly instead of failing silently:
 Try it: delete/rename `ml/artifacts/model.pkl` and hit `/health` — you'll see
 `degraded` with a specific reason, and scoring still works.
 
-## Security & privacy
+## Security & Privacy
 
 - No secrets in git — everything sensitive comes from `.env` / environment
   variables (see `.env.example`).
@@ -309,7 +309,7 @@ Try it: delete/rename `ml/artifacts/model.pkl` and hit `/health` — you'll see
   a natural place for an auth dependency in FastAPI) but wiring a real
   identity provider was out of scope for the timeline.
 
-## Known gaps / what I'd do with more time
+## Known Gaps / what I'd do with more time
 
 - SHAP is referenced in the docs as the intended explainability method;
   the current scaffold uses model `feature_importances_` /
