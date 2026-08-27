@@ -7,7 +7,7 @@ from app.agent.investigator import AGENT_VERSION, Investigator
 from app.agent.tools import AgentToolbox
 from app.core.audit import record_event
 from app.database import get_db
-from app.models.db_models import HumanDecision, InvestigationCase, RiskScore, Transaction
+from app.models.db_models import HumanDecision, InvestigationCase, Transaction
 from app.schemas.schemas import DecisionIn, InvestigateRequest, InvestigationReportOut
 from app.services.ml_scoring import score_transaction
 from app.state import app_state
