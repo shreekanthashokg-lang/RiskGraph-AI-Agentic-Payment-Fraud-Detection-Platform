@@ -326,7 +326,7 @@ Try it: delete/rename `ml/artifacts/model.pkl` and hit `/health` — you'll see
 - No authentication/authorization middleware is wired up yet (see Security
   section above).
 
-## License / dataset attribution
+## License / DATASET attribution
 
 This repo's code has no dataset bundled beyond the synthetic generator's
 output (which is original, seeded, and committed for zero-setup local runs).
