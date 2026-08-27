@@ -14,7 +14,7 @@ on its own.
 
 ---
 
-## Why this exists
+## WHY THIS MATTERS
 
 Payment fraud is often a *network*, not an isolated bad transaction: shared
 devices, shared IPs, shared beneficiaries, mule accounts. A transaction-level
