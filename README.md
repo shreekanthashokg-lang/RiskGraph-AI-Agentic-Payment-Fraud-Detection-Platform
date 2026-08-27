@@ -219,7 +219,7 @@ this dataset adds (`country`, `bin_country`, `channel`, `merchant_category`,
 — omit any of them and they default to values that don't trigger the new
 signals (see `backend/app/schemas/schemas.py`).
 
-## Quickstart (Docker Compose)
+## Quickstart (DOCKER Compose)
 
 ```bash
 cp .env.example .env   # fill in ANTHROPIC_API_KEY
