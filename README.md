@@ -21,7 +21,7 @@ devices, shared IPs, shared beneficiaries, mule accounts. A transaction-level
 model alone misses the ring. RiskGraph AI scores both the transaction and
 its relationships, then hands HIGH/CRITICAL cases to an AI agent that
 gathers real evidence (not fabricated), grounds its recommendation in
-versioned policy documents via RAG, and requires a human analyst to make the
+versioned policy documents via RAG, AND requires a human analyst to make the
 final call.
 
 ## Architecture
