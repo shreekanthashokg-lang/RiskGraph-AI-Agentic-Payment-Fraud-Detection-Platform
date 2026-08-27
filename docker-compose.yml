@@ -1,0 +1,78 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: riskgraph
+      POSTGRES_PASSWORD: riskgraph
+      POSTGRES_DB: riskgraph
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U riskgraph"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  # One-shot job: generates synthetic data + trains the model into a shared
+  # volume before the backend starts. Re-run with `docker compose run trainer`
+  # any time you want to regenerate data or retrain.
+  trainer:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    working_dir: /app
+    command: >
+      sh -c "python scripts/generate_synthetic_data.py --n-customers 500 --n-transactions 20000 &&
+             python ml/train.py --data data/sample/transactions_synthetic.csv"
+    volumes:
+      - ml_artifacts:/app/ml/artifacts
+      - data_sample:/app/data/sample
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+      trainer:
+        condition: service_completed_successfully
+    environment:
+      DATABASE_URL: postgresql://riskgraph:riskgraph@postgres:5432/riskgraph
+      REDIS_URL: redis://redis:6379/0
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      LLM_MODEL: ${LLM_MODEL:-claude-sonnet-4-6}
+      CORS_ALLOW_ORIGINS: http://localhost:5173
+      MODEL_ARTIFACT_PATH: /app/ml/artifacts/model.pkl
+      POLICY_DOCS_DIR: /app/data/policies
+      RULES_POLICY_PATH: /app/backend/app/policies/rules.yaml
+    volumes:
+      - ml_artifacts:/app/ml/artifacts
+      - data_sample:/app/data/sample
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    environment:
+      VITE_API_BASE_URL: http://localhost:8000
+    depends_on:
+      - backend
+    ports:
+      - "5173:5173"
+
+volumes:
+  pgdata:
+  ml_artifacts:
+  data_sample:

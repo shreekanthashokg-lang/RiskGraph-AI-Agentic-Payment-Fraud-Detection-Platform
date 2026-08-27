@@ -1,0 +1,64 @@
+# RiskGraph AI - Deterministic Rule Policy
+# Versioned and auditable: every risk decision records `policy_version`.
+# Change thresholds here without touching source code.
+policy_version: "rules-v1.2026-08-22"
+
+rules:
+  - id: R001
+    description: "High transaction velocity in a short window"
+    field: velocity_10m
+    operator: ">"
+    threshold: 8
+    weight: 18
+
+  - id: R002
+    description: "New beneficiary combined with high amount"
+    field: is_new_beneficiary
+    operator: "=="
+    threshold: 1
+    weight: 15
+    also_requires:
+      field: amount_to_baseline_ratio
+      operator: ">"
+      threshold: 3
+
+  - id: R003
+    description: "Amount far above customer's historical baseline"
+    field: amount_to_baseline_ratio
+    operator: ">"
+    threshold: 5
+    weight: 17
+
+  - id: R004
+    description: "Customer has prior fraud alerts on record"
+    field: previous_fraud_alerts
+    operator: ">"
+    threshold: 0
+    weight: 20
+
+  - id: R005
+    description: "Transaction from a suspicious / mismatched geography"
+    field: is_suspicious_geo
+    operator: "=="
+    threshold: 1
+    weight: 12
+
+  - id: R006
+    description: "Chargeback history on the account"
+    field: chargeback_history
+    operator: ">"
+    threshold: 0
+    weight: 10
+
+thresholds:
+  low_max: 30
+  medium_max: 60
+  high_max: 85
+  # anything above high_max is CRITICAL
+
+weights:
+  ml_probability: 0.35
+  graph_risk: 0.25
+  anomaly_score: 0.15
+  rule_score: 0.20
+  historical_risk: 0.05

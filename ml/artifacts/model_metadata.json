@@ -1,0 +1,53 @@
+{
+  "model_version": "random_forest_fallback-2026-08-25T09:55:00Z",
+  "model_name": "random_forest_fallback",
+  "trained_at": "2026-08-25T09:55:00Z",
+  "dataset_path": "data/raw/transactions.csv",
+  "dataset_is_synthetic": false,
+  "rows_trained_on": 299695,
+  "feature_names": [
+    "amount",
+    "amount_to_baseline_ratio",
+    "customer_age_days",
+    "customer_transaction_count",
+    "velocity_1m",
+    "velocity_10m",
+    "velocity_1h",
+    "velocity_24h",
+    "previous_fraud_alerts",
+    "chargeback_history",
+    "is_new_beneficiary",
+    "is_suspicious_geo",
+    "promo_used",
+    "avs_match",
+    "cvv_result",
+    "three_ds_flag",
+    "shipping_distance_km",
+    "payment_method_unknown",
+    "channel_app",
+    "channel_web",
+    "merchant_category_electronics",
+    "merchant_category_fashion",
+    "merchant_category_gaming",
+    "merchant_category_grocery",
+    "merchant_category_travel"
+  ],
+  "selected_threshold": 0.3888888888888889,
+  "test_metrics": {
+    "threshold": 0.3888888888888889,
+    "precision": 0.797,
+    "recall": 0.7277,
+    "f1": 0.7608,
+    "roc_auc": 0.9816,
+    "pr_auc": 0.7799,
+    "false_positive_rate": 0.0042,
+    "false_negative_rate": 0.2723,
+    "confusion_matrix": {
+      "tn": 58372,
+      "fp": 245,
+      "fn": 360,
+      "tp": 962
+    }
+  },
+  "artifact_path": "/home/claude/work/riskgraph-ai/ml/artifacts/model.pkl"
+}

@@ -1,0 +1,38 @@
+# --- secrets ---
+.env
+*.pem
+*.key
+
+# --- python ---
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+.venv/
+venv/
+
+# --- data (raw datasets are large and licensed - never commit them) ---
+data/raw/*
+!data/raw/.gitkeep
+*.parquet
+!data/sample/*.csv
+
+# --- ML artifacts (regenerate via `python ml/train.py`; keep repo light) ---
+ml/artifacts/*.pkl
+# metrics.json and plots ARE committed for reviewers to see without training
+
+# --- databases ---
+*.db
+*.sqlite3
+
+# --- frontend ---
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# --- OS / editor ---
+.DS_Store
+.vscode/
+.idea/
