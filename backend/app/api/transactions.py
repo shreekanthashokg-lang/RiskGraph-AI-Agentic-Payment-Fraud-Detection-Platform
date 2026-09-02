@@ -1,6 +1,8 @@
+db_dependency = Depends(get_db)
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import datetime, timezone
+
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
@@ -12,11 +14,13 @@ from app.schemas.schemas import RiskScoreOut, TransactionIn
 from app.services.ml_scoring import score_transaction
 from app.state import app_state
 
+
+
+
 router = APIRouter(prefix="/api/v1/transactions", tags=["transactions"])
 
-
 @router.get("")
-def list_transactions(limit: int = 50, db: Session = Depends(get_db)):
+def list_transactions(limit: int = 50, db: Session = db_dependency):
     rows = db.query(Transaction).order_by(Transaction.timestamp.desc()).limit(limit).all()
     return [
         {"transaction_id": r.transaction_id, "customer_id": r.customer_id, "amount": r.amount,
@@ -25,7 +29,7 @@ def list_transactions(limit: int = 50, db: Session = Depends(get_db)):
 
 
 @router.get("/{transaction_id}")
-def get_transaction(transaction_id: str, db: Session = Depends(get_db)):
+def get_transaction(transaction_id: str, db: Session = db_dependency):
     txn = db.query(Transaction).filter_by(transaction_id=transaction_id).first()
     if not txn:
         raise HTTPException(404, "transaction not found")
@@ -45,9 +49,10 @@ def get_transaction(transaction_id: str, db: Session = Depends(get_db)):
 
 
 @router.post("/score", response_model=RiskScoreOut)
-def score(payload: TransactionIn, db: Session = Depends(get_db)):
+def score(payload: TransactionIn, db: Session = db_dependency):
     txn_dict = payload.model_dump()
-    txn_dict["timestamp"] = (payload.timestamp or datetime.utcnow()).isoformat()
+    txn_dict["timestamp"] = (payload.timestamp or datetime.now(timezone.utc)).isoformat()
+
 
     existing = db.query(Transaction).filter_by(transaction_id=payload.transaction_id).first()
     if not existing:
@@ -56,7 +61,8 @@ def score(payload: TransactionIn, db: Session = Depends(get_db)):
             merchant_id=payload.merchant_id, device_id=payload.device_id, ip_address=payload.ip_address,
             beneficiary_id=payload.beneficiary_id, amount=payload.amount, currency=payload.currency,
             payment_method=payload.payment_method, location=payload.location, lat=payload.lat, lon=payload.lon,
-            timestamp=payload.timestamp or datetime.utcnow(), raw_features=txn_dict,
+           timestamp=payload.timestamp or datetime.now(timezone.utc), raw_features=txn_dict,
+
         ))
         db.commit()
 
