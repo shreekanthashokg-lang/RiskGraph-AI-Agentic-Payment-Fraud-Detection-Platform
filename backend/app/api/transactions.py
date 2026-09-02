@@ -11,10 +11,11 @@ from app.schemas.schemas import RiskScoreOut, TransactionIn
 from app.services.ml_scoring import score_transaction
 from app.state import app_state
 
-# ✅ Define dependency AFTER imports
+# ✅ define dependency AFTER imports
 db_dependency = Depends(get_db)
 
 router = APIRouter(prefix="/api/v1/transactions", tags=["transactions"])
+
 
 @router.get("")
 def list_transactions(limit: int = 50, db: Session = db_dependency):
