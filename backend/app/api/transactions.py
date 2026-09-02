@@ -1,9 +1,6 @@
-db_dependency = Depends(get_db)
 from __future__ import annotations
 
 from datetime import datetime, timezone
-
-
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
@@ -14,8 +11,8 @@ from app.schemas.schemas import RiskScoreOut, TransactionIn
 from app.services.ml_scoring import score_transaction
 from app.state import app_state
 
-
-
+# ✅ Define dependency AFTER imports
+db_dependency = Depends(get_db)
 
 router = APIRouter(prefix="/api/v1/transactions", tags=["transactions"])
 

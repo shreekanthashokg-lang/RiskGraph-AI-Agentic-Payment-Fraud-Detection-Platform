@@ -1,4 +1,3 @@
-db_dependency = Depends(get_db)
 from __future__ import annotations
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -13,8 +12,11 @@ from app.schemas.schemas import DecisionIn, InvestigateRequest, InvestigationRep
 from app.services.ml_scoring import score_transaction
 from app.state import app_state
 
+# ✅ Define dependency AFTER imports
+db_dependency = Depends(get_db)
 
-router = APIRouter(prefix="/api/v1", tags=["investigation"])
+router = APIRouter(prefix="/api/v1/cases", tags=["cases"])
+
 
 
 @router.post("/transactions/investigate", response_model=InvestigationReportOut)
