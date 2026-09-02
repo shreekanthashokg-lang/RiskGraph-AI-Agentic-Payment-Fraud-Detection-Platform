@@ -8,11 +8,14 @@ from app.database import get_db
 from app.models.db_models import RiskScore, Transaction
 from app.state import app_state
 
+# Define reusable dependency once
+db_dependency = Depends(get_db)
+
 router = APIRouter(prefix="/api/v1/risk", tags=["risk"])
 
 
 @router.get("/summary")
-def risk_summary(db: Session = Depends(get_db)):
+def risk_summary(db: Session = db_dependency):
     total = db.query(func.count(Transaction.id)).scalar() or 0
     level_counts = dict(
         db.query(RiskScore.risk_level, func.count(RiskScore.id)).group_by(RiskScore.risk_level).all()
@@ -35,7 +38,7 @@ def risk_summary(db: Session = Depends(get_db)):
 
 
 @router.get("/alerts")
-def risk_alerts(limit: int = 25, min_level: str = "HIGH", db: Session = Depends(get_db)):
+def risk_alerts(limit: int = 25, min_level: str = "HIGH", db: Session = db_dependency):
     order = {"LOW": 0, "MEDIUM": 1, "HIGH": 2, "CRITICAL": 3}
     floor = order.get(min_level.upper(), 2)
     rows = (
@@ -61,7 +64,7 @@ graph_router = APIRouter(prefix="/api/v1/graph", tags=["graph"])
 
 
 @graph_router.get("/transaction/{transaction_id}")
-def graph_for_transaction(transaction_id: str, db: Session = Depends(get_db)):
+def graph_for_transaction(transaction_id: str, db: Session = db_dependency):
     txn = db.query(Transaction).filter_by(transaction_id=transaction_id).first()
     if not txn:
         return {"nodes": [], "edges": []}

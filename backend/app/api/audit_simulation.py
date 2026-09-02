@@ -8,11 +8,14 @@ from app.database import get_db
 from app.models.db_models import RiskScore, Transaction
 from app.schemas.schemas import SimulationRequest, SimulationResult
 
+# Define reusable dependency once
+db_dependency = Depends(get_db)
+
 audit_router = APIRouter(prefix="/api/v1/audit", tags=["audit"])
 
 
 @audit_router.get("/{transaction_id}")
-def audit_for_transaction(transaction_id: str, db: Session = Depends(get_db)):
+def audit_for_transaction(transaction_id: str, db: Session = db_dependency):
     events = get_audit_trail(db, transaction_id)
     return [
         {"event_type": e.event_type, "actor": e.actor, "payload": e.payload,
@@ -25,7 +28,7 @@ simulation_router = APIRouter(prefix="/api/v1/simulation", tags=["simulation"])
 
 
 @simulation_router.post("", response_model=SimulationResult)
-def simulate(payload: SimulationRequest, db: Session = Depends(get_db)):
+def simulate(payload: SimulationRequest, db: Session = db_dependency):
     """
     Recomputes historical decisions under hypothetical thresholds. All
     financial figures are explicitly labeled ESTIMATES derived from actual
@@ -57,11 +60,6 @@ def simulate(payload: SimulationRequest, db: Session = Depends(get_db)):
 
     flagged = 0
     manual_review = 0
-    # We don't have ground-truth fraud labels for live-scored transactions in
-    # this scaffold (that requires a labeled outcome feed) - this simulator
-    # demonstrates the mechanism against the synthetic dataset's known labels
-    # when `raw_features.is_fraud` was captured; unlabeled rows are excluded
-    # from the fraud/false-positive counts and that exclusion is disclosed.
     labeled_total = 0
     fraud_detected = 0
     false_positives = 0
