@@ -14,8 +14,9 @@ instead of the whole investigation crashing.
 """
 from __future__ import annotations
 
+from collections.abc import Callable
 from dataclasses import asdict
-from typing import TYPE_CHECKING, Any, Callable
+from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
     from sqlalchemy.orm import Session
@@ -128,7 +129,7 @@ class AgentToolbox:
     per-investigation so nothing leaks across requests.
     """
 
-    def __init__(self, db: "Session", graph_engine, rule_engine, rag, risk_cache: dict[str, Any]):
+    def __init__(self, db: Session, graph_engine, rule_engine, rag, risk_cache: dict[str, Any]):
         self.db = db
         self.graph_engine = graph_engine
         self.rule_engine = rule_engine
@@ -224,8 +225,7 @@ class AgentToolbox:
         }
 
     def _tool_get_previous_risk_cases(self, args: dict) -> dict:
-        from app.models.db_models import Transaction
-        from app.models.db_models import InvestigationCase
+        from app.models.db_models import InvestigationCase, Transaction
         txns = self.db.query(Transaction.transaction_id).filter_by(customer_id=args["customer_id"]).subquery()
         cases = self.db.query(InvestigationCase).filter(InvestigationCase.transaction_id.in_(txns)).all()
         return {

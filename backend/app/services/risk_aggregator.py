@@ -8,7 +8,7 @@ arbitrary at runtime; the weights are simply read from config.
 """
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 from app.services.anomaly import AnomalyResult
 from app.services.graph_engine import GraphFeatures

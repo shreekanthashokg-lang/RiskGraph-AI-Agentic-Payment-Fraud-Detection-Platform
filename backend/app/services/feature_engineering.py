@@ -8,7 +8,7 @@ inference service (backend/app/services/ml_scoring.py) without drift.
 """
 from __future__ import annotations
 
-from typing import Iterable
+from collections.abc import Iterable
 
 import numpy as np
 import pandas as pd

@@ -24,8 +24,8 @@ from __future__ import annotations
 
 import argparse
 import json
-import uuid
 import random
+import uuid
 from datetime import datetime, timedelta
 from pathlib import Path
 

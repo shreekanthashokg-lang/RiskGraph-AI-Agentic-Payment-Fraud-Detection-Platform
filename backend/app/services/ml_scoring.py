@@ -12,7 +12,11 @@ import logging
 import pandas as pd
 
 from app.services.anomaly import AnomalyResult
-from app.services.feature_engineering import align_columns, engineer_features, to_model_matrix
+from app.services.feature_engineering import (
+    align_columns,
+    engineer_features,
+    to_model_matrix,
+)
 from app.services.graph_engine import GraphFeatures
 from app.services.risk_aggregator import AggregateRiskResult, aggregate_risk
 from app.state import AppState

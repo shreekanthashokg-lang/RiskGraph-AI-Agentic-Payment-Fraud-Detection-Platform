@@ -1,3 +1,4 @@
+db_dependency = Depends(get_db)
 from __future__ import annotations
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -12,11 +13,12 @@ from app.schemas.schemas import DecisionIn, InvestigateRequest, InvestigationRep
 from app.services.ml_scoring import score_transaction
 from app.state import app_state
 
+
 router = APIRouter(prefix="/api/v1", tags=["investigation"])
 
 
 @router.post("/transactions/investigate", response_model=InvestigationReportOut)
-def investigate(payload: InvestigateRequest, db: Session = Depends(get_db)):
+def investigate(payload: InvestigateRequest, db: Session = db_dependency):
     txn = db.query(Transaction).filter_by(transaction_id=payload.transaction_id).first()
     if not txn:
         raise HTTPException(404, "transaction not found")
@@ -26,7 +28,8 @@ def investigate(payload: InvestigateRequest, db: Session = Depends(get_db)):
         "amount": txn.amount, "device_id": txn.device_id, "ip_address": txn.ip_address,
         "beneficiary_id": txn.beneficiary_id, **(txn.raw_features or {}),
     }
-    result, degraded, reason = score_transaction(txn_dict, app_state)
+    result, _, _ = score_transaction(txn_dict, app_state)
+
 
     toolbox = AgentToolbox(
         db=db, graph_engine=app_state.graph_engine, rule_engine=app_state.rule_engine,
@@ -61,9 +64,8 @@ def investigate(payload: InvestigateRequest, db: Session = Depends(get_db)):
         policy_citations=outcome.policy_citations, requires_human_review=outcome.requires_human_review,
     )
 
-
 @router.get("/cases/{case_id}")
-def get_case(case_id: str, db: Session = Depends(get_db)):
+def get_case(case_id: str, db: Session = db_dependency):
     case = db.query(InvestigationCase).filter_by(case_id=case_id).first()
     if not case:
         raise HTTPException(404, "case not found")
@@ -79,7 +81,7 @@ def get_case(case_id: str, db: Session = Depends(get_db)):
 
 
 @router.post("/cases/{case_id}/decision")
-def record_decision(case_id: str, payload: DecisionIn, db: Session = Depends(get_db)):
+def record_decision(case_id: str, payload: DecisionIn, db: Session = db_dependency):
     case = db.query(InvestigationCase).filter_by(case_id=case_id).first()
     if not case:
         raise HTTPException(404, "case not found")

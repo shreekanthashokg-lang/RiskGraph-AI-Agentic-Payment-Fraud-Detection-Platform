@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from datetime import datetime
-from typing import Any, Optional
+from typing import Any
 
 from pydantic import BaseModel, Field
 
@@ -28,17 +28,17 @@ class TransactionIn(BaseModel):
     velocity_24h: int = 0
     previous_fraud_alerts: int = 0
     chargeback_history: int = 0
-    timestamp: Optional[datetime] = None
+    timestamp: datetime | None = None
     # Optional fields available when scoring against the real-data model
     # (ml/artifacts/model.pkl trained on data/raw/transactions.csv - see
     # README "Real dataset training"). Safe to omit: engineer_features()
     # defaults country/bin_country geo-mismatch checks to the lat/lon
     # heuristic and all the flags below to 0/"unknown" when absent, so
     # existing callers that only send the original fields are unaffected.
-    country: Optional[str] = None
-    bin_country: Optional[str] = None
-    channel: Optional[str] = None
-    merchant_category: Optional[str] = None
+    country: str | None = None
+    bin_country: str | None = None
+    channel: str | None = None
+    merchant_category: str | None = None
     promo_used: int = 0
     avs_match: int = 1
     cvv_result: int = 1
@@ -66,7 +66,7 @@ class RiskScoreOut(BaseModel):
     contributors: list[RiskContributorOut]
     rule_hits: list[dict[str, Any]]
     degraded_mode: bool = False
-    degraded_reason: Optional[str] = None
+    degraded_reason: str | None = None
 
 
 class ClusterOut(BaseModel):
@@ -102,7 +102,7 @@ class InvestigationReportOut(BaseModel):
 class DecisionIn(BaseModel):
     decision: str = Field(pattern="^(approve|hold|escalate|reject)$")
     analyst: str
-    notes: Optional[str] = None
+    notes: str | None = None
 
 
 class SimulationRequest(BaseModel):

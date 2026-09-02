@@ -19,7 +19,6 @@ from pathlib import Path
 
 import joblib
 import numpy as np
-import pandas as pd
 from sklearn.calibration import CalibratedClassifierCV
 
 try:
@@ -27,7 +26,7 @@ try:
     HAS_FROZEN_ESTIMATOR = True
 except ImportError:
     HAS_FROZEN_ESTIMATOR = False
-from sklearn.ensemble import RandomForestClassifier, IsolationForest
+from sklearn.ensemble import IsolationForest, RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import (
     average_precision_score,
@@ -44,8 +43,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "backend"))
-from app.services.feature_engineering import to_model_matrix, TARGET_COL  # noqa: E402
-from dataset_adapter import load_and_adapt  # noqa: E402  (ml/ dir is on sys.path[0])
+from app.services.feature_engineering import TARGET_COL, to_model_matrix
+from dataset_adapter import load_and_adapt
 
 try:
     from xgboost import XGBClassifier
@@ -204,7 +203,7 @@ def main():
     scaler = StandardScaler()
     X_train_s = scaler.fit_transform(X_train)
     X_val_s = scaler.transform(X_val)
-    X_test_s = scaler.transform(X_test)
+    _X_test_s = scaler.transform(X_test)
 
     # --- Baseline: Logistic Regression ---
     baseline = LogisticRegression(max_iter=1000, class_weight="balanced", random_state=args.seed)
