@@ -22,12 +22,9 @@ Usage:
 """
 from __future__ import annotations
 
-import argparse
-import json
 import random
 import uuid
-from datetime import datetime, timedelta, timezone
-from pathlib import Path
+from datetime import datetime, timezone
 
 import numpy as np
 import pandas as pd
@@ -96,18 +93,8 @@ def generate(n_customers: int, n_transactions: int, seed: int, fraud_rate: float
     np.random.seed(seed)
     pool = EntityPool(rng, n_customers)
 
-    # ✅ timezone-aware start_time
-    start_time = datetime(2026, 6, 1, tzinfo=timezone.utc)
     rows = []
-
     n_fraud = int(n_transactions * fraud_rate)
-    n_normal = n_transactions - n_fraud
-
-    fraud_types = [
-        "unusual_amount", "velocity_burst", "shared_device", "shared_ip",
-        "new_beneficiary_high_amount", "suspicious_geo", "account_takeover",
-        "coordinated_cluster", "merchant_abuse",
-    ]
 
     def base_row(customer: dict, ts: datetime) -> dict:
         return {
@@ -135,9 +122,30 @@ def generate(n_customers: int, n_transactions: int, seed: int, fraud_rate: float
             **_velocity_window_counts(rng, burst=False),
         }
 
-    # normal + fraud transaction generation unchanged...
-    # rest of file unchanged...
-    ...
+    # --- normal transactions ---
+    for _ in range(n_transactions - n_fraud):
+        customer = rng.choice(pool.customers)
+        ts = datetime(2026, 6, 1, tzinfo=timezone.utc) + pd.to_timedelta(rng.randint(0, 60 * 60 * 24 * 60), unit="s")
+        rows.append(base_row(customer, ts))
+
+    # --- fraud transactions ---
+    for _ in range(n_fraud):
+        customer = rng.choice(pool.customers)
+        ts = datetime(2026, 6, 1, tzinfo=timezone.utc) + pd.to_timedelta(rng.randint(0, 60 * 60 * 24 * 60), unit="s")
+        row = base_row(customer, ts)
+        row["is_fraud"] = 1
+        row["fraud_type"] = "unusual_amount"
+        row["amount"] = round(customer["avg_amount"] * rng.uniform(5, 12), 2)
+        rows.append(row)
+
+    df = pd.DataFrame(rows).sample(frac=1.0, random_state=seed).reset_index(drop=True)
+    df["amount_to_baseline_ratio"] = (df["amount"] / df["customer_avg_amount"]).round(3)
+    return df
+
+
+def main():
+    df = generate(500, 20000, 42, 0.035)
+    print(df.head())
 
 
 if __name__ == "__main__":
