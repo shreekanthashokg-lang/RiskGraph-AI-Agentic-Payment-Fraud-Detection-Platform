@@ -189,7 +189,7 @@ Without `ANTHROPIC_API_KEY` set, `/investigate` still works — it returns a
 `DEGRADED_AI_MODE` deterministic summary instead of failing (see
 `data/policies/POL-006-failure-handling.md`).
 
-### Real-time prediction, verified against the real-data model
+### REAL-TIME prediction, verified against the real-data model
 
 Ran directly against the loaded `ml/artifacts/model.pkl` (no fabricated
 numbers — this is copy-pasted output from an actual run in this
