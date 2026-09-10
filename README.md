@@ -24,7 +24,7 @@ gathers real evidence (not fabricated), grounds its recommendation in
 versioned policy documents via RAG, AND requires a human analyst to make the
 final call.
 
-## Architecture
+## ARCHITECTURE
 
 ```
  Transaction ──▶ Event Ingestion API (FastAPI)
