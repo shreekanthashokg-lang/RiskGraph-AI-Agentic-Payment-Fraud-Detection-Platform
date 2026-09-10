@@ -6,8 +6,8 @@ Built for the Razorpay AI Buildathon 2026 — Track 2: AI Risk Manager.
 RISKGRAPH AI combines transaction-level ML, behavioural anomaly detection,
 a relationship graph, deterministic risk policies, and a grounded AI
 investigation agent to detect coordinated fraud, investigate suspicious
-transactions, and recommend auditable risk actions **with mandatory HUMAN
-oversight**. It is not a chatbot, a generic RAG demo, or a bare classifier —
+transactions, and recommend auditable risk actions **WITH MANDATORY HUMAN
+OVERSIGHT**. It is not a chatbot, a generic RAG demo, or a bare classifier —
 detection, investigation, policy, and decision-making are architecturally
 separate layers, and the AI agent never moves money or finalizes a decision
 on its own.
