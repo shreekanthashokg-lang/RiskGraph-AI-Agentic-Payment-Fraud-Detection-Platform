@@ -309,7 +309,7 @@ Try it: delete/rename `ml/artifacts/model.pkl` and hit `/health` — you'll see
   a natural place for an auth dependency in FastAPI) but wiring a real
   identity provider was out of scope for the timeline.
 
-## Known Gaps / what I'd do with more time
+## KNOW GAPS / WHAT I'd do with more time
 
 - SHAP is referenced in the docs as the intended explainability method;
   the current scaffold uses model `feature_importances_` /
