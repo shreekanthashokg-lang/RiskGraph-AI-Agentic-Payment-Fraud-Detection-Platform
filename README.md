@@ -78,7 +78,7 @@ money or skip that human step (see `data/policies/POL-007-agent-behavior.md`).
 
 Everything below was actually run in development, not just written:
 
-- **Synthetic data generator** — produces 9 distinct fraud archetypes,
+- **Synthetic DATA generator** — produces 9 distinct fraud archetypes,
   verified via `scripts/generate_synthetic_data.py`. Useful for demos and
   for the graph/agent walkthrough, but the shipped model is now trained on
   real data (below), not this generator's output.
