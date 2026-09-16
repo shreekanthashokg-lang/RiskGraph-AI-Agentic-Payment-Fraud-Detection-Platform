@@ -230,7 +230,7 @@ This runs a one-shot `trainer` job (generates data + trains the model into a
 shared volume) before starting Postgres, Redis, the backend, and the
 frontend. Re-run `docker compose run trainer` any time to regenerate.
 
-## Repository layout
+## REPOSITORY LAYOUT
 
 ```
 riskgraph-ai/
