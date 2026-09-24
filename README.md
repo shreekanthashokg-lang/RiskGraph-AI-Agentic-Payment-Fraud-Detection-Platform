@@ -104,7 +104,7 @@ Everything below was actually run in development, not just written:
 - **Legacy synthetic-data path** — `ml/train.py` still works unmodified
   against `data/sample/transactions_synthetic.csv` if you want the original
   synthetic-data model back; pass that path via `--data`.
-- **Graph engine** — tested against the synthetic ring data; correctly
+- **GRAPH ENGINE** — tested against the synthetic ring data; correctly
   separates normal customers (graph risk ≈ 0) from coordinated fraud-ring
   members (graph risk = 1.0). One real bug was found and fixed during
   development: shared *merchants* were initially merging the entire customer
