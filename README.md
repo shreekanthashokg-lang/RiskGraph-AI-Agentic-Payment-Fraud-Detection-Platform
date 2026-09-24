@@ -74,7 +74,7 @@ agent investigates and recommends. A policy engine decides what actions are
 *permitted*. A human decides for HIGH/CRITICAL. The agent can never move
 money or skip that human step (see `data/policies/POL-007-agent-behavior.md`).
 
-## WHAT'S REAL HERE (READ THIS before the demo)
+## WHAT'S REAL HERE (READ THIS BEFORE THE DEMO)
 
 Everything below was actually run in development, not just written:
 
