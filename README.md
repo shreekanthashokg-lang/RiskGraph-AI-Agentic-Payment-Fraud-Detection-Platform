@@ -129,7 +129,7 @@ Everything below was actually run in development, not just written:
   here). Run `npm install && npm run build` locally — do this well before
   recording the demo video, not the night before.
 
-## QUIKSTART (LOCAL,NO Docker)
+## QUIKSTART (LOCAL,NO DOCKER)
 
 ```bash
 # 1. Backend
