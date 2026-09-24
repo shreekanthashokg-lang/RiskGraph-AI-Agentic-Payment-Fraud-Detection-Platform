@@ -284,7 +284,7 @@ docstring for what runs with fakes vs. what needs the full stack.
 
 Every subsystem degrades explicitly instead of failing silently:
 
-| Failure | Behavior |
+| FAILURE | BEHAVIOUR |
 |---|---|
 | `ANTHROPIC_API_KEY` unset / LLM call fails after retries | Agent falls back to a deterministic rule/graph summary, case marked `DEGRADED_AI_MODE`, still requires human review |
 | Model artifact missing/corrupt | `/health` reports `model_status: degraded`; scoring continues using graph + rules only, `degraded_mode: true` on the response |
