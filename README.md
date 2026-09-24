@@ -170,7 +170,7 @@ npm run dev
 # -> http://localhost:5173
 ```
 
-SCORE A TRANSACTION and try THE AGENT:
+SCORE A TRANSACTION AND TRY THE AGENT:
 
 ```bash
 curl -X POST http://localhost:8000/api/v1/transactions/score \
