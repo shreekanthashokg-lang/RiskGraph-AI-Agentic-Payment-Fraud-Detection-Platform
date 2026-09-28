@@ -76,7 +76,7 @@ money or skip that human step (see `data/policies/POL-007-agent-behavior.md`).
 
 ## WHAT'S REAL HERE (READ THIS BEFORE THE DEMO)
 
-EVERYTHING BELOW WAS ACTUALLY RUN IN DEVELOPMENT, not just written:
+EVERYTHING BELOW WAS ACTUALLY RUN IN DEVELOPMENT :
 
 - **Synthetic DATA generator** — produces 9 distinct fraud archetypes,
   verified via `scripts/generate_synthetic_data.py`. Useful for demos and
