@@ -1,7 +1,7 @@
 # RiskGraph AI
 
 **Agentic REAL-TIME Payment RISK  & FRAUD Investigation Platform.**
-Built for the Razorpay AI Buildathon 2026 — Track 2: AI Risk Manager.
+Built for the Razorpay AI Buildathon 2026 — Track 2: AI RISK MANAGERr.
 
 RISKGRAPH AI combines transaction-level ML, behavioural anomaly detection,
 a relationship graph, deterministic risk policies, and a grounded AI
