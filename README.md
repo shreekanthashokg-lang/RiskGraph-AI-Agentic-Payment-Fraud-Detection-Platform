@@ -263,7 +263,7 @@ riskgraph-ai/
 └── .github/workflows/ci.yml      lint, train (smoke test), pytest, frontend build
 ```
 
-## Testing
+## TESTING
 
 ```bash
 cd backend
