@@ -295,7 +295,7 @@ Every subsystem degrades explicitly instead of failing silently:
 Try it: delete/rename `ml/artifacts/model.pkl` and hit `/health` — you'll see
 `degraded` with a specific reason, and scoring still works.
 
-## Security & Privacy
+## SECURITY & PRIVACY
 
 - No secrets in git — everything sensitive comes from `.env` / environment
   variables (see `.env.example`).
