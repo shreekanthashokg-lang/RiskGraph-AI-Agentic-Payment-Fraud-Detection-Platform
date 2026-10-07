@@ -128,7 +128,7 @@ EVERYTHING BELOW WAS ACTUALLY RUN IN DEVELOPMENT :
   built/type-checked in this environment (no network for `npm install`
   here). Run `npm install && npm run build` locally — 
 
-## QUIKSTART (LOCAL,NO DOCKER)
+## QUIKSTART 
 
 ```bash
 # 1. Backend
