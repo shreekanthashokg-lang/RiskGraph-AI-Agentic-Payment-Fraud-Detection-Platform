@@ -69,8 +69,9 @@ final call.
                             Immutable Audit Trail
 ```
 
-**HARD BOUNDARY ENFORCED THROUGHOUT:** ML + GRAPH + RULES DECIDE RISK. The
-agent investigates and recommends. A policy engine decides what actions are
+**HARD BOUNDARY ENFORCED THROUGHOUT:** ML + GRAPH + RULES DECIDE RISK. 
+
+THE Agent Investigates and recommends. A policy engine decides what actions are
 *permitted*. A human decides for HIGH/CRITICAL. The agent can never move
 money or skip that human step (see `data/policies/POL-007-agent-behavior.md`).
 
