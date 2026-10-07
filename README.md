@@ -126,8 +126,7 @@ EVERYTHING BELOW WAS ACTUALLY RUN IN DEVELOPMENT :
   taking this on faith.
 - **Frontend** — written against the exact backend API contract but not
   built/type-checked in this environment (no network for `npm install`
-  here). Run `npm install && npm run build` locally — DO THIS WELL BEFORE 
-  recording the demo video.
+  here). Run `npm install && npm run build` locally — 
 
 ## QUIKSTART (LOCAL,NO DOCKER)
 
