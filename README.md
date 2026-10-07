@@ -192,8 +192,8 @@ Without `ANTHROPIC_API_KEY` set, `/investigate` STILL WORKS — it returns a
 
 ### REAL-TIME PREDICTION, VERIFIED AGAINST THE REAL-DATA MODEL
 
-RAN DIRECTLY AGAINST THE LOADED `ml/artifacts/model.pkl` (no fabricated
-numbers — this is copy-pasted output from an actual run in this
+RAN DIRECTLY AGAINST THE LOADED `ml/artifacts/model.pkl` 
+( — this is copy-pasted output from an actual run in this
 environment):
 
 ```
