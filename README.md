@@ -223,7 +223,7 @@ cp .env.example .env   # fill in ANTHROPIC_API_KEY
 docker compose up --build
 ```
 
-This runs a one-shot `trainer` job (generates data + trains the model into a
+THIS IS RUNS ON ONE-SHOT `trainer` job (generates data + trains the model into a
 shared volume) before starting Postgres, Redis, the backend, and the
 frontend. Re-run `docker compose run trainer` any time to regenerate.
 
