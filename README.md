@@ -275,7 +275,7 @@ citation dedup, the retry/fallback decorator, and agent tool dispatch
 (schema validation, unknown-tool handling, no-fabricated-citation
 behavior). Full DB-integration and live-LLM agent tests need
 `ANTHROPIC_API_KEY` and a real DB session — see `tests/test_agent_tools.py`
-DOCSTRING FOR THAT RUNS WITH  fakes vs. what needs the full stack.
+DOCSTRING FOR THAT RUNS WITH  fakes vs. WHAT NEEDA THE FULL STACK. 
 
 ## Failure handling (demo this — it's a scored criterion)
 
