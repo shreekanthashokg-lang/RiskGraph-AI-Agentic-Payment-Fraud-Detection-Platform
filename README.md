@@ -279,7 +279,7 @@ DOCSTRING FOR THAT RUNS WITH  fakes vs. what needs the full stack.
 
 ## Failure handling (demo this — it's a scored criterion)
 
-Every subsystem degrades explicitly instead of failing silently:
+EVERY SUBSYTEM DEGRADES EXPLICITLY  INSTEAD OF FAILING SILENTLY:
 
 | FAILURE | BEHAVIOUR |
 |---|---|
