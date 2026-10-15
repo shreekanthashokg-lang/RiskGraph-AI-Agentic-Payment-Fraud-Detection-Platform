@@ -209,7 +209,7 @@ Medium/edge — above-average amount (4x customer baseline) but no other
               ML probability 0.22%   risk_score 15/100   LOW
 ```
 
-TO SCORE YOUR OWN TRANSACTION  against the trained model, the extra fields
+TO SCORE YOUR OWN TRANSACTION AGAINST THE TRAINED MODEL, THE EXTRA FIELDS 
 this dataset adds (`country`, `bin_country`, `channel`, `merchant_category`,
 `promo_used`, `avs_match`, `cvv_result`, `three_ds_flag`,
 `shipping_distance_km`) are all optional on `POST /api/v1/transactions/score`
