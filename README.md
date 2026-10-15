@@ -268,7 +268,7 @@ pip install -r requirements.txt
 pytest -v --cov=app
 ```
 
-Covers: feature engineering, rule engine (including the `also_requires`
+Covers: FEATURE ENGINEERING, RULE ENGINE (including the `also_requires`
 gating logic), graph engine (including the merchant-sharing regression
 test), anomaly explainability, risk aggregation, RAG retrieval and
 citation dedup, the retry/fallback decorator, and agent tool dispatch
