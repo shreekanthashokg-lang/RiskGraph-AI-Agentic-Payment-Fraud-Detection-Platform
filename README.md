@@ -193,7 +193,7 @@ Without `ANTHROPIC_API_KEY` set, `/investigate` STILL WORKS — it returns a
 RAN DIRECTLY AGAINST THE LOADED `ml/artifacts/model.pkl` 
 
 ```
-Low risk    — long-standing FR customer, small grocery purchase, card
+LOW RISK    — long-standing FR customer, small grocery purchase, card
               country matches, 3DS present:
               ML probability 0.03%   risk_score 12/100   LOW
 
