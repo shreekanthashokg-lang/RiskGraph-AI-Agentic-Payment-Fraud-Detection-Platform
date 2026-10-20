@@ -277,7 +277,7 @@ behavior). Full DB-integration and live-LLM agent tests need
 `ANTHROPIC_API_KEY` and a real DB session — see `tests/test_agent_tools.py`
 DOCSTRING FOR THAT RUNS WITH  fakes vs. WHAT NEEDA THE FULL STACK. 
 
-## Failure handling (demo this — it's a scored criterion)
+## FAILURE HANDLING (demo this — it's a scored criterion)
 
 EVERY SUBSYTEM DEGRADES EXPLICITLY  INSTEAD OF FAILING SILENTLY:
 
