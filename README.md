@@ -213,7 +213,7 @@ TO SCORE YOUR OWN TRANSACTION AGAINST THE TRAINED MODEL, THE EXTRA FIELDS
 this dataset adds (`country`, `bin_country`, `channel`, `merchant_category`,
 `promo_used`, `avs_match`, `cvv_result`, `three_ds_flag`,
 `shipping_distance_km`) are all optional on `POST /api/v1/transactions/score`
-— OMIT ANY OF THEM AND THEY DEFAULT TO VALUES that don't trigger the new
+— OMIT ANY OF THEM AND THEY DEFAULT TO VALUES THAT DON'T TRIGGER NEW
 signals (see `backend/app/schemas/schemas.py`).
 
 ## QUIKSTART (DOCKER Compose)
