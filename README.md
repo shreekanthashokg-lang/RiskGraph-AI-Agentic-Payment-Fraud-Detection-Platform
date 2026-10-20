@@ -156,7 +156,7 @@ python ml/train.py --data data/raw/transactions.csv
 python scripts/generate_synthetic_data.py --n-customers 500 --n-transactions 20000
 python ml/train.py --data data/sample/transactions_synthetic.csv
 
-# 3. Run the API
+# 3. RUN THE API
 cd backend
 uvicorn app.main:app --reload --port 8000
 # -> http://localhost:8000/docs for interactive OpenAPI docs
