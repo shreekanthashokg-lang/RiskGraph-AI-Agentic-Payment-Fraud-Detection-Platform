@@ -184,7 +184,7 @@ curl -X POST http://localhost:8000/api/v1/transactions/investigate \
   -d '{"transaction_id":"txn_demo_1"}'
 ```
 
-Without `ANTHROPIC_API_KEY` set, `/investigate` STILL WORKS — it returns a
+Without `ANTHROPIC_API_KEY` set, `/investigate` STILL WORKS — IT RETURNS A
 `DEGRADED_AI_MODE` deterministic summary instead of failing (see
 `data/policies/POL-006-failure-handling.md`).
 
