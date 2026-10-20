@@ -152,7 +152,7 @@ python ml/train.py --data data/raw/transactions.csv
 #   reports/metrics.json + *.png        mirrored copies for the reports/ convention
 #   data/processed/transactions_processed.csv.gz   the adapted/engineered dataset
 
-# (Optional) train on the original synthetic generator's data instead:
+# (Optional) TRAIN ON THE ORIGINAL synthetic generator's data instead:
 python scripts/generate_synthetic_data.py --n-customers 500 --n-transactions 20000
 python ml/train.py --data data/sample/transactions_synthetic.csv
 
