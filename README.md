@@ -137,7 +137,7 @@ python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 cp ../.env.example ../.env   # fill in ANTHROPIC_API_KEY for LIVE agent mode
 
-# 2. Train the model on the real dataset
+# 2. TRAIN THE MODEL ON THE REAL DATASET
 cd ..
 # Place the real dataset at data/raw/transactions.csv (already there if you
 # unzipped this project as delivered), then:
