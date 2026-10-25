@@ -319,7 +319,7 @@ Try it: delete/rename `ml/artifacts/model.pkl` and hit `/health` — you'll see
   transactions with a known ground-truth label (the synthetic dataset);
   this is disclosed in the `assumptions` field of every simulation
   response rather than silently averaged over unlabeled live traffic.
-- No authentication/authorization middleware is wired up yet (see Security
+- No authentication/AUTHORIZATION MIDDLEWARE IS WIRED UP YET (see Security
   section above).
 
 ## License / DATASET ATTRIBUTION
