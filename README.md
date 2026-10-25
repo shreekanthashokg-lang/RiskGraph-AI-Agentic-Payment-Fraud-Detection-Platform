@@ -115,7 +115,7 @@ EVERYTHING BELOW WAS ACTUALLY RUN IN DEVELOPMENT :
 - **RAG policy retrieval** — TF-IDF over the 8 markdown policy docs in
   `data/policies/`; tested to correctly retrieve the right policy for a
   given query, entirely offline (no embedding API dependency).
-- **Backend (FastAPI/SQLAlchemy/Claude agent)** — every file passes
+- **BACKEND (FastAPI/SQLAlchemy/Claude agent)** — every file passes
   `python -m py_compile`; the scoring pipeline (`ml_scoring.py`) was
   exercised end-to-end including the degraded-mode fallback path using a
   duck-typed stand-in for application state, since this development
