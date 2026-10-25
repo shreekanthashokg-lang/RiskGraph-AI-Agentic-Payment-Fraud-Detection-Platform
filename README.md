@@ -9,7 +9,7 @@ investigation agent to detect coordinated fraud, investigate suspicious
 transactions, and recommend auditable risk actions **WITH MANDATORY HUMAN
 OVERSIGHT**. It is not a chatbot, a generic RAG demo, or a bare classifier —
 detection, investigation, policy, and decision-making are architecturally
-separate layers, and the AI agent never moves money or finalizes A DECSION ON ITS OWN.
+separate layers, and the AI AGENT NEVER MOVES MONEY OR FINALIZES A DECSION ON ITS OWN.
 
 ---
 
