@@ -325,8 +325,8 @@ Try it: delete/rename `ml/artifacts/model.pkl` and hit `/health` — you'll see
 
 ## License / DATASET ATTRIBUTION
 
-This repo's CODE HAS NOO DATASET BUNDLED BEYOND THE SYNTHETIC  generator's
-output (which is original, seeded, and committed for zero-setup local runs).
+THIS REPO'S  CODE HAS NOO DATASET BUNDLED BEYOND THE SYNTHETIC  generator's
+OUTPUT (which is original, seeded, and committed for zero-setup local runs).
 `scripts/download_dataset.sh` documents how to optionally pull IEEE-CIS
 Fraud Detection and PaySim from Kaggle under their respective licenses — see
 the comments in that script before using either dataset.
