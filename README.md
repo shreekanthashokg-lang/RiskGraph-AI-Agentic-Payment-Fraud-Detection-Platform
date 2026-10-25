@@ -184,7 +184,7 @@ curl -X POST http://localhost:8000/api/v1/transactions/investigate \
 ```
 
 Without `ANTHROPIC_API_KEY` set, `/investigate` STILL WORKS — IT RETURNS A
-`DEGRADED_AI_MODE` deterministic summary instead of failing (see
+`DEGRADED_AI_MODE` DETERMINSTIC SUMMARY INSTEAD OF FAILING (see
 `data/policies/POL-006-failure-handling.md`).
 
 ### REAL-TIME PREDICTION, VERIFIED AGAINST THE REAL-DATA MODEL
