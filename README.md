@@ -123,7 +123,7 @@ EVERYTHING BELOW WAS ACTUALLY RUN IN DEVELOPMENT :
   **Run `pip install -r backend/requirements.txt` and `pytest` yourself
   before the demo** to get a real, fully-installed pytest run rather than
   taking this on faith.
-- **Frontend** — written against the exact backend API contract but not
+- **Frontend** — WRITTEN AGAINST THE EXACT BACKEND API contract but not
   built/type-checked in this environment (no network for `npm install`
   here). Run `npm install && npm run build` locally — 
 
