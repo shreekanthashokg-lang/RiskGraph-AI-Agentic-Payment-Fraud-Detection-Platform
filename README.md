@@ -15,7 +15,7 @@ separate layers, and the AI agent never moves money or finalizes A DECSION ON IT
 
 ## WHY THIS MATTERS
 
-Payment fraud is often a *network*, not an isolated bad transaction: shared
+PAYMENT FRAUD IS OFTEN A  *network*, not an isolated bad transaction: shared
 devices, shared IPs, shared beneficiaries, mule accounts. A transaction-level
 model alone misses the ring. RiskGraph AI scores both the transaction and
 its relationships, then hands HIGH/CRITICAL cases to an AI agent that
