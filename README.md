@@ -308,7 +308,7 @@ Try it: delete/rename `ml/artifacts/model.pkl` and hit `/health` — you'll see
 
 ## KNOW GAPS / WHAT I HAVE TO DO WITH MORE TIME
 
-- SHAP is referenced in the docs as the intended explainability method;
+- SHAP IS REFERENCED IN THE DOCSS AS THE INTENDED EXPLAINABILITY METHOD; 
   the current scaffold uses model `feature_importances_` /
   `contribution_points` from the risk aggregator instead, because adding
   full SHAP value computation to the live scoring path needs more latency
