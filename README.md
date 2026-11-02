@@ -29,7 +29,7 @@ RiskGraph AI asks:
 
 🎯 The Problem
 
-Modern payment fraud is rarely an isolated event.
+MODERN PAYMENT FRAUD IS RARELY AN ISOLATED EVENT. 
 
 Fraudsters increasingly operate through networks of:
 
