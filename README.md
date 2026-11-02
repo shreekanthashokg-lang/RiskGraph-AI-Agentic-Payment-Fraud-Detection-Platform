@@ -9,8 +9,7 @@ RiskGraph AI is an enterprise-grade fraud detection and investigation platform d
 
 Traditional fraud systems evaluate transactions independently and produce a fraud probability score. While effective against simple fraud patterns, they often fail to detect coordinated attacks involving mule accounts, device farms, synthetic identities, account takeovers, and organized fraud rings.
 
-RiskGraph AI goes beyond transaction-level detection.
-
+RISKGRAPH  AI GOES BEYOND TRANSACTION-LEVEL DETECTION. 
 IT COMBINES EVERYTHING :
 
 🤖 Machine Learning Risk Scoring
