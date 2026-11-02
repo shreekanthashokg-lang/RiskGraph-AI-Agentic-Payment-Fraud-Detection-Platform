@@ -1,544 +1,751 @@
 RiskGraph AI
+
 Agentic Real-Time Payment Risk & Fraud Investigation Platform
-Built for Razorpay AI Buildathon 2026
-Track 2: AI Risk Manager
-Executive Summary
+ Built for Razorpay AI Buildathon 2026 • Track 2: AI Risk Manager
+
+🚀 Executive Summary
 
 RiskGraph AI is an enterprise-grade fraud detection and investigation platform designed for modern payment ecosystems.
 
-Traditional fraud systems evaluate transactions independently and produce a binary fraud prediction. This approach struggles against organized fraud rings, mule networks, account takeovers, synthetic identities, and coordinated attacks where the risk emerges from the relationships between entities rather than from a single transaction.
+Traditional fraud systems evaluate transactions independently and produce a fraud probability score. While effective against simple fraud patterns, they often fail to detect coordinated attacks involving mule accounts, device farms, synthetic identities, account takeovers, and organized fraud rings.
 
-RiskGraph AI solves this problem through a multi-layered architecture that combines:
+RiskGraph AI goes beyond transaction-level detection.
 
-Machine Learning Risk Scoring
-Behavioral Anomaly Detection
-Graph-Based Fraud Ring Detection
-Deterministic Risk Policies
-Retrieval-Augmented AI Investigation
-Human-in-the-Loop Decision Making
+It combines:
 
-The platform analyzes not only the transaction itself but also the network surrounding it, including:
+🤖 Machine Learning Risk Scoring
+🕸️ Graph-Based Relationship Analysis
+📈 Behavioral Anomaly Detection
+📋 Deterministic Risk Policies
+🧠 AI-Powered Fraud Investigation
+✅ Human-in-the-Loop Decision Governance
 
-Shared devices
-Shared IP addresses
-Shared beneficiaries
-Shared accounts
-Historical fraud patterns
-Velocity spikes
-Cross-border anomalies
+Rather than asking:
 
-For high-risk cases, an AI Investigation Agent gathers evidence, retrieves relevant internal policies, generates an explainable risk assessment, and recommends actions while ensuring that final decisions remain under human control.
+"Is this transaction fraudulent?"
 
-The Problem
+RiskGraph AI asks:
 
-Fraud has evolved beyond isolated suspicious transactions.
+"How risky is this transaction, who is it connected to, what evidence exists, which policies apply, and what action should a risk analyst consider?"
 
-Modern payment fraud often operates through interconnected ecosystems of:
+🎯 The Problem
+
+Modern payment fraud is rarely an isolated event.
+
+Fraudsters increasingly operate through networks of:
 
 Mule accounts
-Device farms
+Shared devices
+Proxy infrastructure
 Synthetic identities
-Organized fraud rings
+Coordinated beneficiary networks
 Account takeover campaigns
 
-Consider the following scenario:
+Consider the following example:
 
-Plain Text
-Customer A ─── Device X
-Customer B ─── Device X
-Customer C ─── Device X
- 
-Customer A ─── Beneficiary Z
-Customer B ─── Beneficiary Z
- 
-Customer C ─── IP Y
-Customer D ─── IP Y
+Customer A ── Device X
+Customer B ── Device X
+Customer C ── Device X
 
-Individually, each transaction may appear legitimate.
+Customer A ── Beneficiary Z
+Customer B ── Beneficiary Z
 
-Collectively, they reveal a coordinated fraud network.
+Customer C ── IP Y
+Customer D ── IP Y
 
-Most traditional ML systems fail because they:
 
-❌ Analyze transactions independently
+Viewed individually:
 
-❌ Ignore entity relationships
+✅ Transactions appear normal
 
-❌ Can't explain decisions clearly
+Viewed collectively:
 
-❌ Produce black-box outputs
+🚨 A coordinated fraud network emerges
 
-❌ Lack governance and auditability
+Most traditional fraud systems struggle because they:
 
-❌ Are difficult for risk analysts to investigate
+Analyze transactions independently
+Ignore relationships between entities
+Rely heavily on static rules
+Produce black-box decisions
+Lack investigation support
+Provide limited auditability
+💡 Our Solution
 
-Our Solution
-
-RiskGraph AI introduces a layered risk architecture that separates:
+RiskGraph AI introduces a layered architecture that separates:
 
 Detection
 
-"What is risky?"
+What is risky?
 
 Performed by:
 
 ML Models
-Graph Analytics
+Graph Intelligence
 Rule Engine
 Anomaly Detection
 Investigation
 
-"Why is it risky?"
+Why is it risky?
 
 Performed by:
 
-AI Investigator Agent
-Policy Retrieval System
-Evidence Collection Engine
+AI Investigation Agent
+Policy Search
+Evidence Collection Framework
 Governance
 
-"What action is allowed?"
+What actions are allowed?
 
 Performed by:
 
-Policy Engine
-Human Analyst Review
+Deterministic Policy Engine
+Human Risk Analyst
 Immutable Audit Trail
-Key Innovation
-Graph-Aware Fraud Intelligence
+⭐ Key Innovation
+Fraud Detection Through Relationship Intelligence
 
-Unlike traditional fraud systems that evaluate a transaction in isolation, RiskGraph AI constructs a relationship graph connecting:
+Unlike traditional systems that evaluate a payment in isolation, RiskGraph AI constructs a fraud graph that links:
 
-Plain Text
 Customer
-├─ Device
-├─ IP Address
-├─ Merchant
-└─ Beneficiary
+ ├── Device
+ ├── IP Address
+ ├── Beneficiary
+ └── Merchant
 
-This enables the discovery of hidden patterns such as:
+
+This relationship network enables detection of:
 
 Fraud Rings
 
-Multiple customers using the same device.
+Many customers sharing the same device.
 
 Mule Networks
 
-Many accounts funneling funds to one beneficiary.
+Many accounts transferring funds to a common beneficiary.
 
 Device Farms
 
-Large numbers of accounts originating from a small set of devices.
+Hundreds of accounts coming from a few devices.
 
-Shared-Infrastructure Attacks
+Shared Infrastructure Attacks
 
-Connections through common IP ranges.
+Clusters operating behind common IP ranges.
 
-Synthetic Identity Clusters
+Synthetic Identity Groups
 
-Groups of seemingly unrelated accounts linked through hidden infrastructure.
+Apparently unrelated users connected through hidden infrastructure.
 
-Technical Architecture
-Plain Text
-┌─────────────────┐
-│ Payment Event │
-└────────┬────────┘
-│
-▼
- 
-Event Ingestion Layer
-│
-┌────────────────────┼───────────────────┐
-▼ ▼ ▼
- 
-Feature Engine Graph Builder Policy Engine
-│ │ │
-▼ ▼ ▼
- 
-ML Risk Model Graph Risk Score Rule Violations
-│ │ │
-└──────────────┬─────┴───────────────┬──┘
-▼
- 
-Risk Aggregation Engine
- 
-▼
- 
-LOW MEDIUM HIGH CRITICAL
- 
-▼
- 
-AI Investigation Agent
- 
-▼
- 
-Policy-Grounded Recommendations
- 
-▼
- 
-Human Risk Analyst
- 
-▼
- 
-Immutable Audit Trail
- 
-Core Components
-1. Machine Learning Layer
+🏗 Architecture
+                    ┌──────────────────┐
+                    │ Payment Event    │
+                    └────────┬─────────┘
+                             │
+                             ▼
+
+                    Event Ingestion API
+                          (FastAPI)
+
+                             │
+
+       ┌─────────────────────┴────────────────────┐
+       ▼                                          ▼
+
+ Feature Engineering                    Relationship Graph
+                                                  (NetworkX)
+
+       ▼                                          ▼
+
+   ML Risk Model                        Graph Risk Engine
+
+(RandomForest/XGBoost)     (Shared Device/IP/Beneficiary Analysis)
+
+       └─────────────────────┬────────────────────┘
+                             ▼
+
+                    Anomaly Detection
+                     (IsolationForest)
+
+                             ▼
+
+                    Deterministic Rules
+                      (Versioned YAML)
+
+                             ▼
+
+                     Risk Aggregator
+
+                             ▼
+
+              Risk Score (0-100) + Severity
+
+                 LOW • MEDIUM • HIGH • CRITICAL
+
+                             ▼
+
+          ┌──────────────────┴─────────────────┐
+          ▼                                    ▼
+
+      LOW/MEDIUM                      HIGH/CRITICAL
+
+ Auto Approve / Step-Up          AI Investigation Agent
+
+                                         ▼
+
+                            Evidence Collection
+                             Policy Retrieval
+                           Recommendation Engine
+
+                                         ▼
+
+                              Human Risk Analyst
+
+                                         ▼
+
+                            Immutable Audit Trail
+
+🔬 Core Components
+1. Machine Learning Risk Layer
 
 Purpose:
 
-Predict fraud probability based on transaction behavior.
+Predict fraud probability using transaction behaviour and historical activity.
 
-Input Signals
-transaction amount
-customer baseline spending
-historical fraud alerts
-country mismatch
-velocity features
-authentication failures
-payment channel
-Model
+Signals Used
+Transaction amount
+Customer spending baseline
+Geographic mismatch
+Authentication failures
+Transaction velocity
+Historical fraud alerts
+Merchant category
+Card-country mismatch
+Shipping distance
+Payment channel
+Real Dataset Training
 
-Current implementation:
+Unlike many hackathon demos built entirely on synthetic data, RiskGraph AI trains on a real fraud dataset containing:
 
-RandomForest (fallback)
-XGBoost-ready architecture
+299,695 transactions
+6,000 customers
+2.21% fraud rate
 
-Performance on real dataset:
 
+Feature engineering computes:
+
+velocity_1m
+velocity_10m
+velocity_1h
+velocity_24h
+previous_fraud_alerts
+is_suspicious_geo
+
+using only historical records available before the transaction being scored, preventing target leakage.
+
+Current Performance
 Metric	ScoreROC-AUC	0.982
 PR-AUC	0.780
 Precision	0.80
 Recall	0.73
-F1	0.76
-
-The model is calibrated to avoid over-confidence and provide meaningful risk probabilities.
-
-2. Behavioral Anomaly Engine
+F1 Score	0.76
+2. Behavioral Anomaly Detection
 
 Purpose:
 
-Detect previously unseen fraud patterns.
+Detect previously unseen fraud strategies.
 
 Model:
 
-Plain Text
 Isolation Forest
- 
+
 
 Detects:
 
-Sudden spending spikes
-Velocity anomalies
+Spending spikes
+Abnormal velocity
+New behavior patterns
 Geographic anomalies
-Unusual transaction timing
-Behavioral deviation
+Rare transaction combinations
 
 Benefit:
 
-Can identify emerging fraud patterns before explicit rules are created.
+Rules only catch known patterns. Anomaly detection catches emerging patterns.
 
-3. Graph Intelligence Engine
+3. Relationship Graph Engine
 
 Purpose:
 
-Detect coordinated activity.
+Detect coordinated fraud activity.
 
-Graph nodes include:
+Nodes:
 
-Plain Text
 Customer
 Device
-IP
+IP Address
 Merchant
 Beneficiary
 
-Graph edges represent:
 
-Plain Text
+Edges:
+
 USES_DEVICE
 USES_IP
 PAYS_TO
 PURCHASES_FROM
 
+
 Example:
 
-Plain Text
-Cust001 ── DeviceA
-Cust002 ── DeviceA
-Cust003 ── DeviceA
+Customer_1 ── Device_A
+Customer_2 ── Device_A
+Customer_3 ── Device_A
 
-Graph Engine automatically identifies:
 
-Connected Components
-Fraud Clusters
+The graph engine identifies:
+
+Connected Fraud Clusters
+Shared Devices
 Shared Infrastructure
-Account Networks
+Suspicious Beneficiary Networks
+Fraud Rings
 
 Output:
 
-Python
-graph_risk_score = 0.0 -> 1.0
+graph_risk_score = 0.0 → 1.0
+
 4. Deterministic Rule Engine
 
 Purpose:
 
-Capture domain knowledge and regulatory requirements.
+Capture expert fraud knowledge in a transparent, auditable form.
 
-Examples:
+Example Rules:
 
-High-Risk Amount
-YAML
+High Amount
 IF amount > threshold
-THEN add risk points
+THEN increase risk
+
+Beneficiary Risk
+IF new_beneficiary = true
+THEN increase risk
+
 Country Mismatch
-YAML
-IF transaction_country != card_country
-THEN add risk points
-Prior Fraud History
-YAML
+IF card_country != transaction_country
+THEN increase risk
+
+Repeat Alerts
 IF previous_fraud_alerts > 0
-THEN add risk points
+THEN increase risk
+
 
 Benefits:
 
-Explainable
-Auditable
-Versioned
-Easy to modify
-5. Risk Aggregator
+✅ Explainable
+
+✅ Version Controlled
+
+✅ Auditable
+
+✅ Easy To Modify
+
+5. Risk Aggregation Engine
 
 Combines:
 
-Plain Text
-ML Score
+ML Risk Score
 +
-Graph Score
+Graph Risk Score
 +
-Anomaly Score
+Anomaly Detection Score
 +
-Rule Violations
+Policy Rule Signals
 
-Output:
 
-Plain Text
+Produces:
+
 Risk Score: 0-100
 
-Levels:
 
-Score	Risk0-25	Low
-26-50	Medium
-51-75	High
-76-100	Critical
-AI Investigation Agent
+Risk Tiers:
 
-The Investigation Agent only activates for:
+Score Range	Severity0-25	LOW
+26-50	MEDIUM
+51-75	HIGH
+76-100	CRITICAL
+🤖 AI Investigation Agent
 
-Plain Text
-High Risk
-Critical Risk
+The Investigation Agent activates only for:
 
-The agent does NOT make final decisions.
+HIGH
+CRITICAL
 
-The agent:
 
-✅ Retrieves transaction details
+risk cases.
 
-✅ Analyzes graph relationships
+What The Agent Can Do
 
-✅ Retrieves applicable policies
+✅ Retrieve transaction details
 
-✅ Builds evidence package
+✅ Analyze graph connections
 
-✅ Produces explainable recommendation
+✅ Query policy documents
 
-The agent cannot:
+✅ Gather supporting evidence
 
-❌ Release payments
+✅ Generate investigation summaries
 
-❌ Block accounts
+✅ Recommend analyst actions
+
+What The Agent Cannot Do
 
 ❌ Move money
 
+❌ Block accounts
+
+❌ Reverse transactions
+
 ❌ Override policy
 
-❌ Skip human review
+❌ Skip human approval
 
-Retrieval-Augmented Governance (RAG)
+❌ Execute financial actions
 
-The AI Investigator uses internal policy documents.
+This restriction is enforced by policy:
 
-Example policies:
+POL-007: Agent Behavior Policy
 
-Plain Text
-POL-001 Transaction Escalation
+📚 Retrieval-Augmented Governance (RAG)
+
+The Investigation Agent does not generate recommendations from memory.
+
+Instead, it searches internal policy documentation.
+
+Examples:
+
+POL-001 Escalation Policy
 POL-002 Fraud Ring Investigation
-POL-003 Velocity Abuse
-POL-004 High-Risk Geography
+POL-003 Velocity Monitoring
+POL-004 Geographic Risk Controls
+POL-005 Transaction Hold Procedures
+POL-006 Failure Handling
 POL-007 Agent Behavior
 POL-008 Privacy Requirements
 
-The agent must cite retrieved policies before making recommendations.
 
-No policy retrieval = no recommendation.
+The agent must cite relevant policy sections before making recommendations.
+
+No policy evidence → No recommendation.
 
 This prevents hallucinated compliance decisions.
 
-Human-in-the-Loop Safety Model
+👨‍💼 Human-in-the-Loop Safety Model
 
-A fundamental principle of RiskGraph AI:
+A fundamental design principle:
 
 AI Recommends
 Humans Decide
 
 Workflow:
 
-Plain Text
 Detect
-↓
+ ↓
+
 Investigate
-↓
+ ↓
+
 Recommend
-↓
+ ↓
+
 Human Review
-↓
+ ↓
+
 Decision
 
-This satisfies key governance requirements for:
 
-Financial institutions
-Fintech platforms
-Regulatory audit
-Risk management teams
-Explainability
+No High or Critical transaction can be automatically finalized by the AI agent.
 
-Every risk decision includes:
+The human analyst remains the ultimate decision-maker.
+
+🔍 Explainability & Auditability
+
+Every investigation contains four separate sections:
 
 Evidence
 
-Facts retrieved from systems.
+Facts gathered from systems.
 
 Example:
 
-Plain Text
-Shared Device:
-8 customers
- 
-Shared Beneficiary:
-17 transactions
- 
+Device Shared By:
+8 Customers
+
+Beneficiary Shared By:
+17 Transactions
+
 Country Mismatch:
 Detected
+
 Inference
 
 Reasoning derived from evidence.
 
 Example:
 
-Plain Text
-Activity resembles mule-account behavior.
+Pattern resembles coordinated mule activity.
+
 Recommendation
 
-Suggested action.
+Suggested next step.
 
 Example:
 
-Plain Text
 Escalate for manual review.
-Policy Citation
-Plain Text
-POL-003
+
+Policy Citations
+
+Example:
+
+POL-002
 POL-007
 
-This produces a complete audit trail for investigation and compliance purposes.
 
-Failure-Tolerant Architecture
+Every recommendation can therefore be traced, reviewed, and audited.
 
-Production systems must degrade gracefully.
+📊 Example Risk Scoring Results
+Legitimate Transaction
+Scenario:
+Long-standing customer
+Small grocery purchase
+Card country matches transaction country
+3DS authentication passed
 
-RiskGraph AI explicitly supports:
+ML Fraud Probability: 0.03%
+Risk Score: 12/100
 
-LLM Failure
+Result:
+LOW RISK
 
-Fallback:
+Suspicious Transaction
+Scenario:
+New customer
+Card issued in Nigeria
+Transaction from United States
+High velocity activity
+AVS failed
+CVV failed
+3DS failed
+8,200 km shipping distance
+2 previous fraud alerts
 
-Plain Text
-Deterministic Investigation Summary
-Model Failure
+ML Fraud Probability: 86.57%
+Risk Score: 61/100
 
-Fallback:
+Result:
+HIGH RISK
 
-Plain Text
-Rules + Graph Scoring
-Graph Failure
 
-Fallback:
+Triggered Rules:
 
-Plain Text
-Default Graph Features
-RAG Failure
+R002
+R003
+R004
+R005
+Edge Case Transaction
+Scenario:
+4× normal customer spend
+No other fraud indicators
 
-Fallback:
+ML Fraud Probability: 0.22%
+Risk Score: 15/100
 
-Plain Text
-No Policy Evidence
-No Recommendation
-Database Failure
+Result:
+LOW RISK
 
-Fallback:
 
-Plain Text
-Structured Retry
-Graceful 503
-Business Impact
+Demonstrates reduced false positives through signal aggregation.
 
-RiskGraph AI helps organizations:
+🛡 Failure-Tolerant Design
+
+One of the judging criteria is system resilience.
+
+RiskGraph AI explicitly degrades rather than failing silently.
+
+Failure Scenario	System BehaviorLLM unavailable	Deterministic investigation summary
+API key missing	DEGRADED_AI_MODE
+Model unavailable	Graph + Rules fallback
+Graph engine failure	Default graph features
+Empty RAG index	No policy recommendations
+Database unavailable	Retry + structured 503
+
+Example:
+
+mv ml/artifacts/model.pkl model.bak
+
+
+Then:
+
+GET /health
+
+
+Returns:
+
+{
+  "model_status": "degraded"
+}
+
+
+while scoring remains operational.
+
+📈 Business Impact
+
+RiskGraph AI helps payment providers:
 
 Reduce Fraud Losses
 
-Detect coordinated attacks earlier.
+Earlier identification of coordinated attacks.
 
 Reduce False Positives
 
-Combine multiple signals before escalation.
+Multiple signals reduce unnecessary alerts.
 
-Improve Analyst Productivity
+Increase Analyst Efficiency
 
-Auto-generate investigation summaries.
+Automated evidence gathering and summarization.
 
 Improve Compliance
 
-Provide auditable, explainable decisions.
+Policy-grounded recommendations.
 
 Improve Trust
 
-Human approval remains mandatory.
+Human oversight remains mandatory.
 
-Why RiskGraph AI Is Different
-Capability	Traditional Fraud Systems	RiskGraph AIML Fraud Detection	✅	✅
-Network Analysis	❌	✅
-Fraud Ring Detection	❌	✅
-Explainable Decisions	Partial	✅
-Policy-Aware AI	❌	✅
-Human-in-the-Loop Governance	Rare	✅
-Failure Degradation	Limited	✅
-Auditable Recommendations	Limited	✅
-Future Roadmap
-v2
-Neo4j Graph Database
-Graph Neural Networks
+🔒 Security & Privacy
+Environment-based secret management
+No hard-coded credentials
+Pydantic request validation
+Configurable CORS controls
+Immutable audit records
+Synthetic demo data
+No real PII within repository
+🧪 Testing Coverage
+cd backend
+pytest -v --cov=app
+
+
+Covered Components:
+
+✅ Feature Engineering
+
+✅ Rule Engine
+
+✅ Graph Engine
+
+✅ Anomaly Detection
+
+✅ Risk Aggregation
+
+✅ Policy Retrieval
+
+✅ Agent Tool Dispatch
+
+✅ Retry & Fallback Framework
+
+✅ Citation Validation
+
+⚡ Quick Start
+1. Backend Setup
+cd backend
+
+python -m venv .venv
+source .venv/bin/activate
+
+pip install -r requirements.txt
+
+cp ../.env.example ../.env
+
+
+Add:
+
+ANTHROPIC_API_KEY=<your_key>
+
+2. Train The Model
+python ml/train.py \
+  --data data/raw/transactions.csv
+
+
+Generates:
+
+ml/artifacts/model.pkl
+ml/artifacts/metrics.json
+ml/artifacts/model_metadata.json
+reports/classification_report.txt
+reports/*.png
+
+3. Start The API
+cd backend
+
+uvicorn app.main:app \
+  --reload \
+  --port 8000
+
+
+Open:
+
+http://localhost:8000/docs
+http://localhost:8000/health
+
+4. Start Frontend
+cd frontend
+
+npm install
+npm run dev
+
+
+Open:
+
+http://localhost:5173
+
+🐳 Docker Deployment
+cp .env.example .env
+
+docker compose up --build
+
+
+The stack launches:
+
+Trainer
+PostgreSQL
+Redis
+Backend API
+Frontend Dashboard
+🗺 Future Roadmap
+Version 2
+Neo4j Integration
+Graph Neural Networks (GNNs)
 SHAP Explainability
-Real-Time Stream Processing
-Adaptive Fraud Policies
-v3
+Kafka Streaming
+Real-Time Feature Store
+Version 3
 Cross-Merchant Fraud Intelligence
-Multi-Agent Investigation Framework
+Multi-Agent Investigations
+Adaptive Policy Learning
 Fraud Ring Visualization Studio
-Continuous Learning Feedback Loops
+Continuous Feedback Training
+🏆 Why RiskGraph AI Stands Out
+Capability	Traditional Systems	RiskGraph AITransaction ML	✅	✅
+Graph Analytics	❌	✅
+Fraud Ring Detection	❌	✅
+Behavioral Anomalies	Limited	✅
+AI Investigation	❌	✅
+Policy-Grounded Decisions	❌	✅
+Human Oversight	Rare	✅
+Audit Trail	Partial	✅
+Resilient Degradation	Limited	✅
 Final Takeaway
 
 RiskGraph AI is not just a fraud classifier.
 
-It is a complete risk intelligence platform that combines supervised machine learning, graph analytics, anomaly detection, deterministic governance, retrieval-augmented investigation, and human oversight to detect, explain, and manage fraud in modern payment ecosystems.
+It is a complete AI-powered fraud detection, investigation, governance, and decision-support platform that combines machine learning, graph intelligence, anomaly detection, policy-aware AI, and mandatory human oversight.
 
-By separating detection, investigation, policy, and decision-making into independent layers, the system remains explainable, auditable, resilient, and safe for deployment in regulated financial environments.
+By separating Detection, Investigation, Governance, and Decision Making into independent layers, RiskGraph AI delivers a system that is explainable, auditable, resilient, compliant, and ready for real-world payment risk operations.
