@@ -87,7 +87,7 @@ Investigation
 
 Why is it risky?
 
-Performed by:
+PERFORMED BY:
 
 AI Investigation Agent
 Policy Search
