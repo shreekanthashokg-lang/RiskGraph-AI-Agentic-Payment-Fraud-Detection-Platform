@@ -239,7 +239,7 @@ velocity_24h
 previous_fraud_alerts
 is_suspicious_geo
 
-using only historical records available before the transaction being scored, preventing target leakage.
+USING ONLY HISTORICAL RECORDS  available before the transaction being scored, preventing target leakage.
 
 Current Performance
 Metric	ScoreROC-AUC	0.982
