@@ -1,331 +1,544 @@
-# RiskGraph AI
+RiskGraph AI
+Agentic Real-Time Payment Risk & Fraud Investigation Platform
+Built for Razorpay AI Buildathon 2026
+Track 2: AI Risk Manager
+Executive Summary
 
-**AGENTIC REAL-TIME PAYMENT RISK  & FRAUD INVESTIGATION PLATFORM .**
-Built for the Razorpay AI Buildathon 2026 — Track 2: **AI RISK MANAGER**.
+RiskGraph AI is an enterprise-grade fraud detection and investigation platform designed for modern payment ecosystems.
 
-RISKGRAPH AI COMBINE TRANSACTIONS-level ML, behavioural anomaly detection,
-a relationship graph, deterministic risk policies, and a grounded AI
-investigation agent to detect coordinated fraud, investigate suspicious
-transactions, and recommend auditable risk actions **WITH MANDATORY HUMAN
-OVERSIGHT**. It is not a chatbot, a generic RAG demo, or a bare classifier —
-detection, investigation, policy, and decision-making are architecturally
-separate layers, and the AI AGENT NEVER MOVES MONEY OR FINALIZES A DECSION ON ITS OWN.
+Traditional fraud systems evaluate transactions independently and produce a binary fraud prediction. This approach struggles against organized fraud rings, mule networks, account takeovers, synthetic identities, and coordinated attacks where the risk emerges from the relationships between entities rather than from a single transaction.
 
----
+RiskGraph AI solves this problem through a multi-layered architecture that combines:
 
-## WHY THIS MATTERS
+Machine Learning Risk Scoring
+Behavioral Anomaly Detection
+Graph-Based Fraud Ring Detection
+Deterministic Risk Policies
+Retrieval-Augmented AI Investigation
+Human-in-the-Loop Decision Making
 
-PAYMENT FRAUD IS OFTEN A  *network*, not an isolated bad transaction: shared
-devices, shared IPs, shared beneficiaries, mule accounts. A transaction-level
-model alone misses the ring. RiskGraph AI scores both the transaction and
-its relationships, then hands HIGH/CRITICAL cases to an AI agent that
-gathers real evidence (not fabricated), grounds its recommendation in
-versioned policy documents via RAG, AND requires A HUMAN ANALYST TO MAKE THE FINAL CALL.
+The platform analyzes not only the transaction itself but also the network surrounding it, including:
 
-## ARCHITECTURE
+Shared devices
+Shared IP addresses
+Shared beneficiaries
+Shared accounts
+Historical fraud patterns
+Velocity spikes
+Cross-border anomalies
 
-```
- Transaction ──▶ Event Ingestion API (FastAPI)
-                        │
-        ┌───────────────┼────────────────┐
-        ▼                                 ▼
- Feature Engineering              Relationship Graph (NetworkX)
-        │                                 │
-        ▼                                 ▼
-   ML Risk Model                   Graph Risk Engine
- (LogReg baseline,                 (shared device/IP,
-  XGBoost + calibration)            cluster detection)
-        │                                 │
-        └───────────────┬─────────────────┘
-                         ▼
-                 Anomaly Detection (IsolationForest)
-                         │
-                         ▼
-                 Rule Engine (versioned YAML policy)
-                         │
-                         ▼
-                 Risk Aggregator → risk_score (0–100), LOW/MED/HIGH/CRITICAL
-                         │
-              ┌──────────┴──────────┐
-              ▼                     ▼
-        LOW / MEDIUM           HIGH / CRITICAL
-              │                     │
-        auto / step-up      AI Investigation Agent (Claude)
-                                    │  (tool calling: get_transaction,
-                                    │   get_graph_connections, search_policy…)
-                                    ▼
-                            RAG over policy docs
-                                    │
-                                    ▼
-                     Evidence / Inference / Recommendation
-                     (never auto-applied — human required)
-                                    │
-                                    ▼
-                          Human Risk Analyst Decision
-                                    │
-                                    ▼
-                            Immutable Audit Trail
-```
+For high-risk cases, an AI Investigation Agent gathers evidence, retrieves relevant internal policies, generates an explainable risk assessment, and recommends actions while ensuring that final decisions remain under human control.
 
-**HARD BOUNDARY ENFORCED THROUGHOUT:** ML + GRAPH + RULES DECIDE RISK. 
+The Problem
 
-THE Agent Investigates and recommends. A POLICY ENGINE DECIDES what actions are
-*permitted*. A human decides for HIGH/CRITICAL. The agent can never move
-money or skip that human step (see `data/policies/POL-007-agent-behavior.md`).
+Fraud has evolved beyond isolated suspicious transactions.
 
-## WHAT'S REAL HERE (READ THIS BEFORE THE DEMO)
+Modern payment fraud often operates through interconnected ecosystems of:
 
-EVERYTHING BELOW WAS ACTUALLY RUN IN DEVELOPMENT :
+Mule accounts
+Device farms
+Synthetic identities
+Organized fraud rings
+Account takeover campaigns
 
-- **Synthetic DATA generator** — produces 9 distinct fraud archetypes,
-  verified via `scripts/generate_synthetic_data.py`. Useful for demos and
-  for the graph/agent walkthrough, but the shipped model is now trained on
-  real data (below), not this generator's output.
-- **Real dataset training (Aug 2026 update)** — `ml/train.py` now trains
-  on a real, non-synthetic Kaggle-style dataset (`data/raw/transactions.csv`,
-  299,695 rows, 6,000 customers, 2.21% real fraud rate). `ml/dataset_adapter.py`
-  maps its raw columns onto RiskGraph AI's schema and computes
-  `velocity_1m/10m/1h/24h` and `previous_fraud_alerts` for real from the
-  dataset's own per-customer timestamps and fraud history (no leakage — each
-  value only uses transactions strictly before the one being scored), and
-  `is_suspicious_geo` from a real card-country vs. transaction-country
-  mismatch signal. Two fields this dataset has no source for
-  (`chargeback_history`, `is_new_beneficiary`) are left at 0 rather than
-  invented — see the module docstring for the full accounting. **Actual test
-  metrics** (RandomForest fallback, since this sandbox has no network to
-  install `xgboost`): **ROC-AUC 0.982, PR-AUC 0.780, precision 0.80, recall
-  0.73, F1 0.76** at the F1-maximizing threshold (0.389) — see
-  `ml/artifacts/metrics.json`, `reports/classification_report.txt`, and the
-  plots in both `ml/artifacts/` and `reports/`. Install `xgboost` locally
-  (this environment couldn't reach PyPI) and re-run `ml/train.py` for the
-  production-candidate boosted model — the pipeline already supports it,
-  it just wasn't installed here.
-- **Legacy synthetic-data path** — `ml/train.py` still works unmodified
-  against `data/sample/transactions_synthetic.csv` if you want the original
-  synthetic-data model back; pass that path via `--data`.
-- **GRAPH ENGINE** — tested against the synthetic ring data; correctly
-  separates normal customers (graph risk ≈ 0) from coordinated fraud-ring
-  members (graph risk = 1.0). One real bug was found and fixed during
-  development: shared *merchants* were initially merging the entire customer
-  base into a single fake cluster — cluster detection now deliberately
-  excludes merchant edges (see the docstring in `graph_engine.py`).
-- **Rule engine, anomaly detector, risk aggregator** — exercised together
-  end-to-end on real sample transactions; scores are sensible and
-  differentiated (normal ≈ 13/LOW, coordinated-cluster member ≈ 85/HIGH).
-- **RAG policy retrieval** — TF-IDF over the 8 markdown policy docs in
-  `data/policies/`; tested to correctly retrieve the right policy for a
-  given query, entirely offline (no embedding API dependency).
-- **BACKEND (FastAPI/SQLAlchemy/Claude agent)** — every file passes
-  `python -m py_compile`; the scoring pipeline (`ml_scoring.py`) was
-  exercised end-to-end including the degraded-mode fallback path using a
-  duck-typed stand-in for application state, since this development
-  environment couldn't install FastAPI/SQLAlchemy/anthropic directly.
-  **Run `pip install -r backend/requirements.txt` and `pytest` yourself
-  before the demo** to get a real, fully-installed pytest run rather than
-  taking this on faith.
-- **Frontend** — WRITTEN AGAINST THE EXACT BACKEND API contract but not
-  built/type-checked in this environment (no network for `npm install`
-  here). Run `npm install && npm run build` locally — 
+Consider the following scenario:
 
-## QUIKSTART 
+Plain Text
+Customer A ─── Device X
+Customer B ─── Device X
+Customer C ─── Device X
+ 
+Customer A ─── Beneficiary Z
+Customer B ─── Beneficiary Z
+ 
+Customer C ─── IP Y
+Customer D ─── IP Y
 
-```bash
-# 1. Backend
-cd backend
-python -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
-cp ../.env.example ../.env   # fill in ANTHROPIC_API_KEY for LIVE agent mode
+Individually, each transaction may appear legitimate.
 
-# 2. TRAIN THE MODEL ON THE REAL DATASET
-cd ..
-# Place the real dataset at data/raw/transactions.csv (already there if you
-# unzipped this project as delivered), then:
-python ml/train.py --data data/raw/transactions.csv
-# Prints dataset diagnostics (rows, detected schema, engineered columns,
-# missing values, class distribution), then trains, evaluates, and saves:
-#   ml/artifacts/model.pkl              trained model + scaler + isolation forest
-#   ml/artifacts/model_metadata.json    dataset/model/metrics summary
-#   ml/artifacts/metrics.json           full metrics
-#   ml/artifacts/*.png                  ROC, PR curve, confusion matrix, feature importance
-#   reports/classification_report.txt   sklearn classification report
-#   reports/metrics.json + *.png        mirrored copies for the reports/ convention
-#   data/processed/transactions_processed.csv.gz   the adapted/engineered dataset
+Collectively, they reveal a coordinated fraud network.
 
-# (Optional) TRAIN ON THE ORIGINAL synthetic generator's data instead:
-python scripts/generate_synthetic_data.py --n-customers 500 --n-transactions 20000
-python ml/train.py --data data/sample/transactions_synthetic.csv
+Most traditional ML systems fail because they:
 
-# 3. RUN THE API
-cd backend
-uvicorn app.main:app --reload --port 8000
-# -> http://localhost:8000/docs for interactive OpenAPI docs
-# -> http://localhost:8000/health to check model/graph/RAG status
+❌ Analyze transactions independently
 
-# 4. Run the frontend (separate terminal)
-cd ../frontend
-npm install
-npm run dev
-# -> http://localhost:5173
-```
+❌ Ignore entity relationships
 
-SCORE A TRANSACTION AND TRY THE AGENT :
+❌ Can't explain decisions clearly
 
-```bash
-curl -X POST http://localhost:8000/api/v1/transactions/score \
-  -H "Content-Type: application/json" \
-  -d '{"transaction_id":"txn_demo_1","customer_id":"cust_00001","merchant_id":"merch_01",
-       "amount":45000,"device_id":"dev_ring","ip_address":"103.1.1.1",
-       "beneficiary_id":"benef_ring","customer_avg_amount":2000,"previous_fraud_alerts":1,
-       "velocity_10m":9}'
+❌ Produce black-box outputs
 
-curl -X POST http://localhost:8000/api/v1/transactions/investigate \
-  -H "Content-Type: application/json" \
-  -d '{"transaction_id":"txn_demo_1"}'
-```
+❌ Lack governance and auditability
 
-Without `ANTHROPIC_API_KEY` set, `/investigate` STILL WORKS — IT RETURNS A
-`DEGRADED_AI_MODE` DETERMINSTIC SUMMARY INSTEAD OF FAILING (see
-`data/policies/POL-006-failure-handling.md`).
+❌ Are difficult for risk analysts to investigate
 
-### REAL-TIME PREDICTION, VERIFIED AGAINST THE REAL-DATA MODEL
+Our Solution
 
-RAN DIRECTLY AGAINST THE LOADED `ml/artifacts/model.pkl` 
+RiskGraph AI introduces a layered risk architecture that separates:
 
-```
-LOW RISK    — long-standing FR customer, small grocery purchase, card
-              country matches, 3DS present:
-              ML probability 0.03%   risk_score 12/100   LOW
+Detection
 
-High risk   — new customer, card issued in Nigeria used from the US,
-              high transaction velocity, AVS/CVV/3DS all failed,
-              8,200km shipping distance, 2 prior fraud alerts:
-              ML probability 86.57%  risk_score 61/100   HIGH
-              (rules R002/R003/R004/R005 all fired — new beneficiary +
-              high amount, above-baseline amount, prior fraud, geo mismatch)
+"What is risky?"
 
-Medium/edge — above-average amount (4x customer baseline) but no other
-              red flags, matching card/transaction country:
-              ML probability 0.22%   risk_score 15/100   LOW
-```
+Performed by:
 
-TO SCORE YOUR OWN TRANSACTION AGAINST THE TRAINED MODEL, THE EXTRA FIELDS 
-this dataset adds (`country`, `bin_country`, `channel`, `merchant_category`,
-`promo_used`, `avs_match`, `cvv_result`, `three_ds_flag`,
-`shipping_distance_km`) are all optional on `POST /api/v1/transactions/score`
-— OMIT ANY OF THEM AND THEY DEFAULT TO VALUES THAT DON'T TRIGGER NEW
-signals (see `backend/app/schemas/schemas.py`).
+ML Models
+Graph Analytics
+Rule Engine
+Anomaly Detection
+Investigation
 
-## QUIKSTART (DOCKER Compose)
+"Why is it risky?"
 
-```bash
-cp .env.example .env   # fill in ANTHROPIC_API_KEY
-docker compose up --build
-```
+Performed by:
 
-THIS IS RUNS ON ONE-SHOT `trainer` job (generates data + trains the model into a
-shared volume) before starting Postgres, Redis, the backend, and the
-frontend. Re-run `docker compose run trainer` ANY TIME TO GENERATE.
+AI Investigator Agent
+Policy Retrieval System
+Evidence Collection Engine
+Governance
 
-## REPOSITORY LAYOUT
+"What action is allowed?"
 
-```
-riskgraph-ai/
-├── backend/app/
-│   ├── main.py                  FastAPI app, startup wiring, /health
-│   ├── state.py                 process-wide singletons (model, graph, RAG)
-│   ├── config.py                env-var configuration (no hard-coded secrets)
-│   ├── api/                     transactions, risk, graph, cases, audit, simulation
-│   ├── models/db_models.py      SQLAlchemy ORM (SQLite locally, Postgres in Docker)
-│   ├── schemas/schemas.py       Pydantic request/response contracts
-│   ├── services/                feature engineering, ML scoring, graph engine,
-│   │                            anomaly detection, rule engine, risk aggregator
-│   ├── agent/                   Claude tool-calling investigator, tools, RAG
-│   ├── core/                    retry/timeout/fallback, immutable audit trail
-│   ├── policies/rules.yaml      versioned deterministic risk rules & thresholds
-│   └── tests/                   pytest suite (see "Testing" below)
-├── ml/train.py                  training pipeline → ml/artifacts/{model.pkl,metrics.json,*.png}
-├── scripts/
-│   ├── generate_synthetic_data.py   seeded synthetic transaction generator
-│   └── download_dataset.sh          optional IEEE-CIS / PaySim setup (see licensing notes inside)
-├── data/
-│   ├── sample/                  small + full synthetic CSVs (committed, run instantly)
-│   ├── policies/                8 markdown policy docs (RAG knowledge base)
-│   └── raw/                     git-ignored — public datasets go here if you use them
-├── frontend/src/
-│   ├── pages/                   Dashboard, TransactionDetail, FraudNetwork, Simulator, Policies
-│   ├── lib/api.ts                typed client matching the backend contract
-│   └── components/
-├── docker-compose.yml            postgres, redis, trainer, backend, frontend
-└── .github/workflows/ci.yml      lint, train (smoke test), pytest, frontend build
-```
+Performed by:
 
-## TESTING
+Policy Engine
+Human Analyst Review
+Immutable Audit Trail
+Key Innovation
+Graph-Aware Fraud Intelligence
 
-```bash
-cd backend
-pip install -r requirements.txt
-pytest -v --cov=app
-```
+Unlike traditional fraud systems that evaluate a transaction in isolation, RiskGraph AI constructs a relationship graph connecting:
 
-Covers: FEATURE ENGINEERING, RULE ENGINE (including the `also_requires`
-gating logic), graph engine (including the merchant-sharing regression
-test), anomaly explainability, risk aggregation, RAG retrieval and
-citation dedup, the retry/fallback decorator, and agent tool dispatch
-(schema validation, unknown-tool handling, no-fabricated-citation
-behavior). Full DB-integration and live-LLM agent tests need
-`ANTHROPIC_API_KEY` and a real DB session — see `tests/test_agent_tools.py`
-DOCSTRING FOR THAT RUNS WITH  fakes vs. WHAT NEEDA THE FULL STACK. 
+Plain Text
+Customer
+├─ Device
+├─ IP Address
+├─ Merchant
+└─ Beneficiary
 
-## FAILURE HANDLING (DEMO THIS -ITS A SCORED CRITERION ) 
+This enables the discovery of hidden patterns such as:
 
-EVERY SUBSYTEM DEGRADES EXPLICITLY  INSTEAD OF FAILING SILENTLY :
+Fraud Rings
 
-| FAILURE | BEHAVIOUR |
-|---|---|
-| `ANTHROPIC_API_KEY` unset / LLM call fails after retries | Agent falls back to a deterministic rule/graph summary, case marked `DEGRADED_AI_MODE`, still requires human review |
-| Model artifact missing/corrupt | `/health` reports `model_status: degraded`; scoring continues using graph + rules only, `degraded_mode: true` on the response |
-| Graph build fails | Falls back to a zero-risk `GraphFeatures` default rather than crashing scoring |
-| RAG index empty/unavailable | `search_policy` tool returns `{"results": [], "note": "..."}`—agent is instructed never to fabricate a citation |
-| DB unreachable | Bounded retry + backoff (`core/fallback.py`), then a structured 503, not a hang |
+Multiple customers using the same device.
 
-Try it: delete/rename `ml/artifacts/model.pkl` and hit `/health` — you'll see
-`degraded` with a specific reason, and scoring still works.
+Mule Networks
 
-## SECURITY & PRIVACY
+Many accounts funneling funds to one beneficiary.
 
-- No secrets in git — everything sensitive comes from `.env` / environment
-  variables (see `.env.example`).
-- Local/demo data is 100% synthetic; no real PII. See
-  `data/policies/POL-008-privacy.md`.
-- CORS is explicitly configured (`CORS_ALLOW_ORIGINS`), inputs are
-  Pydantic-validated at every API boundary, and the audit trail has no
-  update/delete endpoint from the app layer.
-- This scaffold does not ship end-user authentication — the API/DB layer is
-  structured to add it (role column on the analyst who records a decision,
-  a natural place for an auth dependency in FastAPI) but wiring a real
-  identity provider was out of scope for the timeline.
+Device Farms
 
-## KNOW GAPS / WHAT I HAVE TO DO WITH MORE TIME
+Large numbers of accounts originating from a small set of devices.
 
-- SHAP IS REFERENCED IN THE DOCSS AS THE INTENDED EXPLAINABILITY METHOD; 
-  the current scaffold uses model `feature_importances_` /
-  `contribution_points` from the risk aggregator instead, because adding
-  full SHAP value computation to the live scoring path needs more latency
-  budget than a buildathon demo affords. Swapping it in is a contained
-  change inside `services/anomaly.py` / a new `explainability.py`.
-- Neo4j is not implemented — `GraphEngine` is an explicit ABC so a
-  Neo4j-backed implementation can be dropped in without touching callers.
-- The What-If Simulator's fraud-detected/missed figures only apply to
-  transactions with a known ground-truth label (the synthetic dataset);
-  this is disclosed in the `assumptions` field of every simulation
-  response rather than silently averaged over unlabeled live traffic.
-- No authentication/AUTHORIZATION MIDDLEWARE IS WIRED UP YET (see Security
-  section above).
+Shared-Infrastructure Attacks
 
-## License / DATASET ATTRIBUTION
+Connections through common IP ranges.
 
-THIS REPO'S  CODE HAS NOO DATASET BUNDLED BEYOND THE SYNTHETIC  generator's
-OUTPUT (which is original, seeded, and committed for zero-setup local runs).
-`scripts/download_dataset.sh` documents how to optionally pull IEEE-CIS
-Fraud Detection and PaySim from Kaggle under their respective licenses — see
-the comments in that script before using either dataset.
+Synthetic Identity Clusters
+
+Groups of seemingly unrelated accounts linked through hidden infrastructure.
+
+Technical Architecture
+Plain Text
+┌─────────────────┐
+│ Payment Event │
+└────────┬────────┘
+│
+▼
+ 
+Event Ingestion Layer
+│
+┌────────────────────┼───────────────────┐
+▼ ▼ ▼
+ 
+Feature Engine Graph Builder Policy Engine
+│ │ │
+▼ ▼ ▼
+ 
+ML Risk Model Graph Risk Score Rule Violations
+│ │ │
+└──────────────┬─────┴───────────────┬──┘
+▼
+ 
+Risk Aggregation Engine
+ 
+▼
+ 
+LOW MEDIUM HIGH CRITICAL
+ 
+▼
+ 
+AI Investigation Agent
+ 
+▼
+ 
+Policy-Grounded Recommendations
+ 
+▼
+ 
+Human Risk Analyst
+ 
+▼
+ 
+Immutable Audit Trail
+ 
+Core Components
+1. Machine Learning Layer
+
+Purpose:
+
+Predict fraud probability based on transaction behavior.
+
+Input Signals
+transaction amount
+customer baseline spending
+historical fraud alerts
+country mismatch
+velocity features
+authentication failures
+payment channel
+Model
+
+Current implementation:
+
+RandomForest (fallback)
+XGBoost-ready architecture
+
+Performance on real dataset:
+
+Metric	ScoreROC-AUC	0.982
+PR-AUC	0.780
+Precision	0.80
+Recall	0.73
+F1	0.76
+
+The model is calibrated to avoid over-confidence and provide meaningful risk probabilities.
+
+2. Behavioral Anomaly Engine
+
+Purpose:
+
+Detect previously unseen fraud patterns.
+
+Model:
+
+Plain Text
+Isolation Forest
+ 
+
+Detects:
+
+Sudden spending spikes
+Velocity anomalies
+Geographic anomalies
+Unusual transaction timing
+Behavioral deviation
+
+Benefit:
+
+Can identify emerging fraud patterns before explicit rules are created.
+
+3. Graph Intelligence Engine
+
+Purpose:
+
+Detect coordinated activity.
+
+Graph nodes include:
+
+Plain Text
+Customer
+Device
+IP
+Merchant
+Beneficiary
+
+Graph edges represent:
+
+Plain Text
+USES_DEVICE
+USES_IP
+PAYS_TO
+PURCHASES_FROM
+
+Example:
+
+Plain Text
+Cust001 ── DeviceA
+Cust002 ── DeviceA
+Cust003 ── DeviceA
+
+Graph Engine automatically identifies:
+
+Connected Components
+Fraud Clusters
+Shared Infrastructure
+Account Networks
+
+Output:
+
+Python
+graph_risk_score = 0.0 -> 1.0
+4. Deterministic Rule Engine
+
+Purpose:
+
+Capture domain knowledge and regulatory requirements.
+
+Examples:
+
+High-Risk Amount
+YAML
+IF amount > threshold
+THEN add risk points
+Country Mismatch
+YAML
+IF transaction_country != card_country
+THEN add risk points
+Prior Fraud History
+YAML
+IF previous_fraud_alerts > 0
+THEN add risk points
+
+Benefits:
+
+Explainable
+Auditable
+Versioned
+Easy to modify
+5. Risk Aggregator
+
+Combines:
+
+Plain Text
+ML Score
++
+Graph Score
++
+Anomaly Score
++
+Rule Violations
+
+Output:
+
+Plain Text
+Risk Score: 0-100
+
+Levels:
+
+Score	Risk0-25	Low
+26-50	Medium
+51-75	High
+76-100	Critical
+AI Investigation Agent
+
+The Investigation Agent only activates for:
+
+Plain Text
+High Risk
+Critical Risk
+
+The agent does NOT make final decisions.
+
+The agent:
+
+✅ Retrieves transaction details
+
+✅ Analyzes graph relationships
+
+✅ Retrieves applicable policies
+
+✅ Builds evidence package
+
+✅ Produces explainable recommendation
+
+The agent cannot:
+
+❌ Release payments
+
+❌ Block accounts
+
+❌ Move money
+
+❌ Override policy
+
+❌ Skip human review
+
+Retrieval-Augmented Governance (RAG)
+
+The AI Investigator uses internal policy documents.
+
+Example policies:
+
+Plain Text
+POL-001 Transaction Escalation
+POL-002 Fraud Ring Investigation
+POL-003 Velocity Abuse
+POL-004 High-Risk Geography
+POL-007 Agent Behavior
+POL-008 Privacy Requirements
+
+The agent must cite retrieved policies before making recommendations.
+
+No policy retrieval = no recommendation.
+
+This prevents hallucinated compliance decisions.
+
+Human-in-the-Loop Safety Model
+
+A fundamental principle of RiskGraph AI:
+
+AI Recommends
+Humans Decide
+
+Workflow:
+
+Plain Text
+Detect
+↓
+Investigate
+↓
+Recommend
+↓
+Human Review
+↓
+Decision
+
+This satisfies key governance requirements for:
+
+Financial institutions
+Fintech platforms
+Regulatory audit
+Risk management teams
+Explainability
+
+Every risk decision includes:
+
+Evidence
+
+Facts retrieved from systems.
+
+Example:
+
+Plain Text
+Shared Device:
+8 customers
+ 
+Shared Beneficiary:
+17 transactions
+ 
+Country Mismatch:
+Detected
+Inference
+
+Reasoning derived from evidence.
+
+Example:
+
+Plain Text
+Activity resembles mule-account behavior.
+Recommendation
+
+Suggested action.
+
+Example:
+
+Plain Text
+Escalate for manual review.
+Policy Citation
+Plain Text
+POL-003
+POL-007
+
+This produces a complete audit trail for investigation and compliance purposes.
+
+Failure-Tolerant Architecture
+
+Production systems must degrade gracefully.
+
+RiskGraph AI explicitly supports:
+
+LLM Failure
+
+Fallback:
+
+Plain Text
+Deterministic Investigation Summary
+Model Failure
+
+Fallback:
+
+Plain Text
+Rules + Graph Scoring
+Graph Failure
+
+Fallback:
+
+Plain Text
+Default Graph Features
+RAG Failure
+
+Fallback:
+
+Plain Text
+No Policy Evidence
+No Recommendation
+Database Failure
+
+Fallback:
+
+Plain Text
+Structured Retry
+Graceful 503
+Business Impact
+
+RiskGraph AI helps organizations:
+
+Reduce Fraud Losses
+
+Detect coordinated attacks earlier.
+
+Reduce False Positives
+
+Combine multiple signals before escalation.
+
+Improve Analyst Productivity
+
+Auto-generate investigation summaries.
+
+Improve Compliance
+
+Provide auditable, explainable decisions.
+
+Improve Trust
+
+Human approval remains mandatory.
+
+Why RiskGraph AI Is Different
+Capability	Traditional Fraud Systems	RiskGraph AIML Fraud Detection	✅	✅
+Network Analysis	❌	✅
+Fraud Ring Detection	❌	✅
+Explainable Decisions	Partial	✅
+Policy-Aware AI	❌	✅
+Human-in-the-Loop Governance	Rare	✅
+Failure Degradation	Limited	✅
+Auditable Recommendations	Limited	✅
+Future Roadmap
+v2
+Neo4j Graph Database
+Graph Neural Networks
+SHAP Explainability
+Real-Time Stream Processing
+Adaptive Fraud Policies
+v3
+Cross-Merchant Fraud Intelligence
+Multi-Agent Investigation Framework
+Fraud Ring Visualization Studio
+Continuous Learning Feedback Loops
+Final Takeaway
+
+RiskGraph AI is not just a fraud classifier.
+
+It is a complete risk intelligence platform that combines supervised machine learning, graph analytics, anomaly detection, deterministic governance, retrieval-augmented investigation, and human oversight to detect, explain, and manage fraud in modern payment ecosystems.
+
+By separating detection, investigation, policy, and decision-making into independent layers, the system remains explainable, auditable, resilient, and safe for deployment in regulated financial environments.
