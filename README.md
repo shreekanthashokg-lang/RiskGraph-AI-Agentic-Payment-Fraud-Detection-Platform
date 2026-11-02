@@ -113,7 +113,7 @@ Customer
  └── Merchant
 
 
-This relationship network enables detection of:
+THIS RELATIONSHIP NETWORK ENABLES DETECTION OF :
 
 Fraud Rings
 
