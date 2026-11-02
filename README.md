@@ -209,7 +209,7 @@ Apparently unrelated users connected through hidden infrastructure.
 
 Purpose:
 
-Predict fraud probability using transaction behaviour and historical activity.
+PREDICT FRAUD PROBABILITY USING TRANSACTION  behaviour and historical activity.
 
 Signals Used
 Transaction amount
