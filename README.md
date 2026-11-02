@@ -11,7 +11,7 @@ Traditional fraud systems evaluate transactions independently and produce a frau
 
 RiskGraph AI goes beyond transaction-level detection.
 
-It combines:
+IT COMBINES EVERYTHING :
 
 🤖 Machine Learning Risk Scoring
 🕸️ Graph-Based Relationship Analysis
