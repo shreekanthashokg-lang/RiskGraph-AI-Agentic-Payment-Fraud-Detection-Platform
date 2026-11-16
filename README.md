@@ -63,9 +63,9 @@ Viewed collectively:
 
 Most traditional fraud systems struggle because they:
 
-Analyze transactions independently
-Ignore relationships between entities
-Rely heavily on static rules
+ANALYSE TRANSACTIONS INDEPENDENTLY 
+IGNORE RELATIONSHIPS BETWEEN ENTITIES 
+REPLY HEAVILY ON STATIC RULES 
 Produce black-box decisions
 Lack investigation support
 Provide limited auditability
