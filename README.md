@@ -3,7 +3,7 @@ RiskGraph AI
 Agentic Real-Time Payment Risk & Fraud Investigation Platform
  Built for Razorpay AI Buildathon 2026 • Track 2: AI Risk Manager
 
-🚀 Executive Summary
+🚀 Executive SUMMARY 
 
 Riskgraph AI IS AN ENTERPRISE -LEVEL FRAUD DETECTION AND INVESTIGATION PLATFORM DESIGNED FOR MODERN PAYMENT ECOSYSTEM.
 
@@ -21,11 +21,11 @@ IT COMBINES EVERYTHING :
 
 Rather than asking:
 
-"Is this transaction fraudulent?"
+"IS THIS TRANSACTION FRAUDULENT?"
 
-RiskGraph AI asks:
+RISKGRAPH AI ASKS:
 
-"How risky is this transaction, who is it connected to, what evidence exists, which policies apply, and what action should a risk analyst consider?"
+"HOW RISKY IS THIS TRANSACTION, WHO is it connected to, what evidence exists, which policies apply, and what action should a risk analyst consider?"
 
 🎯 The Problem
 
