@@ -104,7 +104,7 @@ Immutable Audit Trail
 ⭐ Key Innovation
 Fraud Detection Through Relationship Intelligence
 
-UNLIKE TRADITIONAL SYSTEMS THAT EVALUATES  a payment in isolation, RiskGraph AI constructs a fraud graph that links:
+UNLIKE TRADITIONAL SYSTEMS THAT EVALUATES  A PAYMENT IN ISOLATION, RISKGRAPH AI CONSTRUCTS a FRAUD GRAPH THAT LINKS:
 
 Customer
  ├── Device
