@@ -121,7 +121,7 @@ Many customers sharing the same device.
 
 Mule Networks
 
-Many accounts transferring funds to a common beneficiary.
+MANY ACCOUNT TRANSFERRING FUNDS to A  COMMON BENEFICIARY.
 
 Device Farms
 
