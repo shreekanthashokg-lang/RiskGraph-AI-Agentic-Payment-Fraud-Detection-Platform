@@ -7,7 +7,7 @@ Agentic Real-Time Payment Risk & Fraud Investigation Platform
 
 Riskgraph AI IS AN ENTERPRISE -LEVEL FRAUD DETECTION AND INVESTIGATION PLATFORM DESIGNED FOR MODERN PAYMENT ECOSYSTEM.
 
-Traditional fraud systems evaluate transactions independently and produce a fraud probability score. While effective against simple fraud patterns, they often fail to detect coordinated attacks involving mule accounts, device farms, synthetic identities, account takeovers, and organized fraud rings.
+Traditional FRAUD SYSTEMS EVALUATE TRANSACTIONS INDEPENDENTLY and produce a fraud probability score. While effective against simple fraud patterns, they often fail to detect coordinated attacks involving mule accounts, device farms, synthetic identities, account takeovers, and organized fraud rings.
 
 RISKGRAPH  AI GOES BEYOND TRANSACTION-LEVEL DETECTION. 
 IT COMBINES EVERYTHING :
