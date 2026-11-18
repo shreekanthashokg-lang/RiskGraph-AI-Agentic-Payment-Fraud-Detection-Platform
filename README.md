@@ -230,7 +230,7 @@ Unlike many hackathon demos built entirely on synthetic data, RiskGraph AI train
 2.21% fraud rate
 
 
-Feature engineering computes:
+FEATURE ENGINEERINGS COMPUTES:
 
 velocity_1m
 velocity_10m
@@ -241,7 +241,7 @@ is_suspicious_geo
 
 USING ONLY HISTORICAL RECORDS  available before the transaction being scored, preventing target leakage.
 
-Current Performance
+CURRENT Performance
 Metric	ScoreROC-AUC	0.982
 PR-AUC	0.780
 Precision	0.80
