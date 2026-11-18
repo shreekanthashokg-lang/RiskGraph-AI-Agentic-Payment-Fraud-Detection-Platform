@@ -40,11 +40,11 @@ Synthetic identities
 Coordinated beneficiary networks
 Account takeover campaigns
 
-Consider the following example:
+Consider THE FOLLOWING EXAMPLE:
 
-Customer A ── Device X
-Customer B ── Device X
-Customer C ── Device X
+Customer A ── DEVICE X
+Customer B ── DEVICE X
+Customer C ── DEVICE X
 
 Customer A ── Beneficiary Z
 Customer B ── Beneficiary Z
@@ -53,7 +53,7 @@ Customer C ── IP Y
 Customer D ── IP Y
 
 
-Viewed individually:
+VIEWED INDIVIDUALLY:
 
 ✅ TRANSACTIONS APPEARED NORMAL 
 
