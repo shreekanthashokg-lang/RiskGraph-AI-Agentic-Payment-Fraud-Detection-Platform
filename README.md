@@ -12,8 +12,8 @@ TRADITIONAL FRAUD SYSTEMS EVALUATE TRANSACTIONS INDEPENDENTLY and produce a frau
 RISKGRAPH  AI GOES BEYOND TRANSACTION-LEVEL DETECTION. 
 IT COMBINES EVERYTHING :
 
-🤖 Machine Learning Risk Scoring
-🕸️ Graph-Based Relationship Analysis
+🤖 MACHINE LEARNING RISK SCORING 
+🕸️ GRAPH-BASED RELATIONSHIP ANALYSIS 
 📈 Behavioral Anomaly Detection
 📋 Deterministic Risk Policies
 🧠 AI-Powered Fraud Investigation
