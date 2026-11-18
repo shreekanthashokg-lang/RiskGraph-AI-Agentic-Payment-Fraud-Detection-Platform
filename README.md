@@ -85,7 +85,7 @@ Rule Engine
 Anomaly Detection
 Investigation
 
-Why is it risky?
+WHY IS IT RISKY?
 
 PERFORMED BY:
 
@@ -96,10 +96,10 @@ Governance
 
 What actions are allowed?
 
-Performed by:
+PERFORMED BY:
 
-Deterministic Policy Engine
-Human Risk Analyst
+DETERMINISTIC POLICY ENGINE 
+HUMAN Risk Analyst
 Immutable Audit Trail
 ⭐ Key Innovation
 Fraud Detection Through Relationship Intelligence
