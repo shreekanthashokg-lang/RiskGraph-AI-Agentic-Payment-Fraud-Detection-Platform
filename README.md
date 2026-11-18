@@ -203,10 +203,10 @@ Apparently unrelated users connected through hidden infrastructure.
 
                             Immutable Audit Trail
 
-🔬 Core Components
-1. Machine Learning Risk Layer
+🔬 CORE COMPONENTS 
+1. MACHINE LEARNING RISK LAYER 
 
-Purpose:
+PURPOSE:
 
 PREDICT FRAUD PROBABILITY USING TRANSACTION  behaviour and historical activity.
 
