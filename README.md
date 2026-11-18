@@ -1,4 +1,4 @@
-RiskGraph AI
+ARiskGraph AI
 
 Agentic Real-Time Payment Risk & Fraud Investigation Platform
  Built for Razorpay AI Buildathon 2026 • Track 2: AI Risk Manager
@@ -55,9 +55,9 @@ Customer D ── IP Y
 
 Viewed individually:
 
-✅ Transactions appear normal
+✅ TRANSACTIONS APPEARED NORMAL 
 
-Viewed collectively:
+VIEWED COLLECTIVELY:
 
 🚨 A coordinated fraud network emerges
 
