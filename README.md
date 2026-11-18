@@ -19,7 +19,7 @@ IT COMBINES EVERYTHING :
 🧠 AI-Powered Fraud Investigation
 ✅ Human-in-the-Loop Decision Governance
 
-Rather than asking:
+RATHER THAN ASKING :
 
 "IS THIS TRANSACTION FRAUDULENT?"
 
