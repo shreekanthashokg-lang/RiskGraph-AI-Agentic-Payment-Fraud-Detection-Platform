@@ -131,9 +131,9 @@ Shared Infrastructure Attacks
 
 Clusters operating behind common IP ranges.
 
-Synthetic Identity Groups
+SYNTHETIC Identity GROUPS 
 
-Apparently unrelated users connected through hidden infrastructure.
+APPARENTLY UNRELATED USERS CONNECTED THROUGH HIDDEN INFRASTRUCTURE.
 
 🏗 Architecture
                     ┌──────────────────┐
