@@ -73,9 +73,9 @@ Provide limited auditability
 
 RiskGraph AI INTRODUCE A LAYERED ARCHITECURE THAT SEPERATES :
 
-Detection
+DETECTION
 
-What is risky?
+WHAT IS RISKY?
 
 Performed by:
 
