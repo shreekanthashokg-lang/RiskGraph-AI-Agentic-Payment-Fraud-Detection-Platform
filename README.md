@@ -69,9 +69,9 @@ REPLY HEAVILY ON STATIC RULES
 Produce black-box decisions
 Lack investigation support
 Provide limited auditability
-💡 Our Solution
+💡 OUR SOLUTION
 
-RiskGraph AI introduces a layered architecture that separates:
+RiskGraph AI INTRODUCE A LAYERED ARCHITECURE THAT SEPERATES :
 
 Detection
 
