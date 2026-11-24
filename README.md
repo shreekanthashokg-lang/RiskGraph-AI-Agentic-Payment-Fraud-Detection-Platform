@@ -125,7 +125,7 @@ MANY ACCOUNT TRANSFERRING FUNDS to A  COMMON BENEFICIARY.
 
 Device Farms
 
-Hundreds of accounts coming from a few devices.
+HUNDRADS OF ACCOUNTS COMING FROM A FEW DEVICES. 
 
 Shared Infrastructure Attacks
 
