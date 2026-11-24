@@ -274,7 +274,7 @@ Rules only catch known patterns. Anomaly detection catches emerging patterns.
 
 Purpose:
 
-Detect coordinated fraud activity.
+DETECT COORDINATED FRAUD ACTIVITY.
 
 Nodes:
 
