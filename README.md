@@ -117,7 +117,7 @@ THIS RELATIONSHIP NETWORK ENABLES DETECTION OF :
 
 Fraud Rings
 
-Many customers sharing the same device.
+MANY CUSTOMERS SHARING THE SAME DEVICES.
 
 Mule Networks
 
