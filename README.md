@@ -80,7 +80,7 @@ What is risky?
 Performed by:
 
 ML Models
-Graph Intelligence
+GRAPH INTELLIGENCE
 Rule Engine
 Anomaly Detection
 Investigation
