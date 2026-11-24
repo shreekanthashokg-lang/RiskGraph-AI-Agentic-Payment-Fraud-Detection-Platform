@@ -255,7 +255,7 @@ Detect previously unseen fraud strategies.
 
 Model:
 
-Isolation Forest
+ISOLATION FOREST
 
 
 Detects:
