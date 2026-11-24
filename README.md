@@ -1,6 +1,6 @@
 ARiskGraph AI
 
-Agentic Real-Time Payment Risk & Fraud Investigation Platform
+Agentic Real-Time PAYMENT RISK & FRAUD INVESTIGATION PLATFORM 
  Built for Razorpay AI Buildathon 2026 • Track 2: AI Risk Manager
 
 🚀 Executive SUMMARY 
